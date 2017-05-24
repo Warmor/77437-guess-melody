@@ -1,7 +1,7 @@
 # Личный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
 * Студент: [Павел Гришин](https://up.htmlacademy.ru/ecmascript/2/user/77437).
-* Наставник: `Неизвестно`.
+* Наставник: `Дмитрий Бородий`.
 
 ---
 
