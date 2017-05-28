@@ -58,7 +58,7 @@ const onClickaAnswer = function () {
   renderScreen(screenLevelGenre);
 };
 
-for (let answer of answerCollection) {
+for (const answer of answerCollection) {
   answer.addEventListener(`click`, onClickaAnswer);
 }
 

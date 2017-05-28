@@ -58,12 +58,10 @@ const toggleSendButton = function (condition) {
 // Проверка, если хотябы 1 секбокс выбран;
 const validateForm = function () {
   let valid = false;
-  for (let checkbox of checkboxCollection) {
+  for (const checkbox of checkboxCollection) {
     if (checkbox.checked) {
       valid = true;
       break;
-    } else {
-      valid = false;
     }
   }
   toggleSendButton(valid);
@@ -75,7 +73,7 @@ for (let checkbox of checkboxCollection) {
 
 const onClickSendButton = function (event) {
   event.preventDefault();
-  let screenLevelResult = getRandomElement([screenLevelSuccess, screenLevelFail]);
+  const screenLevelResult = getRandomElement([screenLevelSuccess, screenLevelFail]);
   renderScreen(screenLevelResult);
   setInitialState();
 };
