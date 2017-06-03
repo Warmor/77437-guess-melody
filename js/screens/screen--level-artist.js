@@ -43,7 +43,7 @@ export default (data) => {
   const answerCollection = screenLevelArtist.querySelectorAll(`.main-answer`);
 
   const onClickaAnswer = function () {
-    setScreen()
+    setScreen();
   };
 
   for (const answer of answerCollection) {

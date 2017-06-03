@@ -46,10 +46,8 @@ export default (data) => {
 
   // Проверка, если хотябы 1 секбокс выбран;
   const validateForm = function () {
-    let valid = false;
     for (const checkbox of checkboxCollection) {
       if (checkbox.checked) {
-        valid = true;
         sendButton.disabled = false;
         break;
       } else {

@@ -10,16 +10,16 @@ import screenLevelFail from '../screens/screen--result--fail';
 const setScreen = function () {
   if (data.curentQuest === 0) {
     renderScreen(screenWelcome());
-    ++data.curentQuest
+    ++data.curentQuest;
     return;
-  } else if(data.curentQuest > data.maxQuest) {
+  } else if (data.curentQuest > data.maxQuest) {
     const screenLevelResult = getRandomElement([screenLevelSuccess, screenLevelFail]);
     renderScreen(screenLevelResult());
     data.curentQuest = 0;
   } else {
     const screenLevelQuest = getRandomElement([screenLevelArtist, screenLevelGenre]);
     renderScreen(screenLevelQuest(data.songs));
-    ++data.curentQuest
+    ++data.curentQuest;
   }
 };
 
