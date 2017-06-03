@@ -1,9 +1,19 @@
 export default {
-  title: {
-    welcome: 'Правила игры',
-    levelArtist: 'Кто исполняет эту песню?',
-    levelGenre: 'Выберите инди-рок треки',
-    resultFail: 'Вы проиграли',
-    resultSuccess: 'Вы настоящий меломан!'
+  maxQuest: 3,
+  curentQuest: 0,
+  welcome: {
+
   },
+  levelArtist: {
+
+  },
+  levelGenre: {
+
+  },
+  resultFail: {
+
+  },
+  resultSuccess: {
+
+  }
 }

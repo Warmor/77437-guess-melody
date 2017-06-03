@@ -1,9 +1,6 @@
+import moduleTimer from './part/module-timer';
 import getElementFromTemplate from '../utils/get-element-from-template';
-import renderScreen from '../utils/render-screen';
-import screenLevelGenre from './screen--level-genre';
-import data from '../data/data';
-import moduleTimer from '../module/module-timer';
-
+import setScreen from '../controllers/set-screen';
 export default () => {
   const timer = moduleTimer(`02`, `00`);
   const template = `
@@ -12,7 +9,7 @@ export default () => {
     ${timer}
 
     <div class="main-wrap">
-      <h2 class="title main-title">${data.title.levelArtist}</h2>
+      <h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper"></div>
       <form class="main-list">
         <div class="main-answer-wrapper">
@@ -24,7 +21,7 @@ export default () => {
         </div>
 
         <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-1" />
+          <input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-2" />
           <label class="main-answer" for="answer-2">
             <img class="main-answer-preview" src="">
             Краснознаменная дивизия имени моей бабушки
@@ -32,8 +29,8 @@ export default () => {
         </div>
 
         <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-1" />
-          <label class="main-answer" for="answer-2">
+          <input class="main-answer-r" type="radio" id="answer-3" name="answer" value="val-3" />
+          <label class="main-answer" for="answer-3">
             <img class="main-answer-preview" src="">
             Lorde
           </label>
@@ -47,7 +44,7 @@ export default () => {
   const answerCollection = screenLevelArtist.querySelectorAll(`.main-answer`);
 
   const onClickaAnswer = function () {
-    renderScreen(screenLevelGenre());
+    setScreen()
   };
 
   for (const answer of answerCollection) {
