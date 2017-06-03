@@ -1,12 +1,11 @@
 import moduleTimer from './part/module-timer';
 import getElementFromTemplate from '../utils/get-element-from-template';
 import setScreen from '../controllers/set-screen';
-export default () => {
-  const timer = moduleTimer(`02`, `00`);
+export default (data) => {
   const template = `
   <section class="main main--level main--level-genre">
 
-    ${timer}
+    ${moduleTimer()}
 
     <div class="main-wrap">
       <h2 class="title main-title">Выберите инди-рок треки</h2>
@@ -14,25 +13,25 @@ export default () => {
 
         <div class="genre-answer">
           <div class="player-wrapper"></div>
-          <input type="checkbox" name="answer" value="answer-1" id="a-1">
+          <input type="checkbox" name="answer" value="${data[0].value}" id="a-1">
           <label class="genre-answer-check" for="a-1"></label>
         </div>
 
         <div class="genre-answer">
           <div class="player-wrapper"></div>
-          <input type="checkbox" name="answer" value="answer-2" id="a-2">
+          <input type="checkbox" name="answer" value="${data[1].value}" id="a-2">
           <label class="genre-answer-check" for="a-2"></label>
         </div>
 
         <div class="genre-answer">
           <div class="player-wrapper"></div>
-          <input type="checkbox" name="answer" value="answer-3" id="a-3">
+          <input type="checkbox" name="answer" value="${data[2].value}" id="a-3">
           <label class="genre-answer-check" for="a-3"></label>
         </div>
 
         <div class="genre-answer">
           <div class="player-wrapper"></div>
-          <input type="checkbox" name="answer" value="answer-4" id="a-4">
+          <input type="checkbox" name="answer" value="${data[3].value}" id="a-4">
           <label class="genre-answer-check" for="a-4"></label>
         </div>
 

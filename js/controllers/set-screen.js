@@ -8,7 +8,6 @@ import screenLevelSuccess from '../screens/screen--result--success';
 import screenLevelFail from '../screens/screen--result--fail';
 
 const setScreen = function () {
-  console.log(data.curentQuest)
   if (data.curentQuest === 0) {
     renderScreen(screenWelcome());
     ++data.curentQuest
@@ -19,7 +18,7 @@ const setScreen = function () {
     data.curentQuest = 0;
   } else {
     const screenLevelQuest = getRandomElement([screenLevelArtist, screenLevelGenre]);
-    renderScreen(screenLevelQuest());
+    renderScreen(screenLevelQuest(data.songs));
     ++data.curentQuest
   }
 };

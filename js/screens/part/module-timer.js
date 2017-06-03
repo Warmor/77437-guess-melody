@@ -1,4 +1,4 @@
-export default (min, sec) => {
+export default () => {
   const moduleTimer = `
       <div class="main-timer">
         <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -6,9 +6,9 @@ export default (min, sec) => {
         </svg>
 
         <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-          <span class="timer-value-mins">${min}</span><!--
+          <span class="timer-value-mins">02</span><!--
           --><span class="timer-value-dots">:</span><!--
-          --><span class="timer-value-secs">${sec}</span>
+          --><span class="timer-value-secs">00</span>
         </div>
       </div>`;
 
