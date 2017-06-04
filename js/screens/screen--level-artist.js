@@ -1,7 +1,7 @@
 import moduleTimer from './part/module-timer';
 import getElementFromTemplate from '../utils/get-element-from-template';
 import setScreen from '../controllers/set-screen';
-export default (data) => {
+export default (songs, trueSongs) => {
 
   const templateAnswer = (answer) => `
     <div class="main-answer-wrapper">
@@ -19,23 +19,32 @@ export default (data) => {
 
     <div class="main-wrap">
       <h2 class="title main-title">Кто исполняет эту песню?</h2>
-      <div class="player-wrapper"></div>
+      <div class="player-wrapper">${trueSongs.filePath}</div>
       <form class="main-list">
-        ${data.map((answer) => templateAnswer(answer)).join(``)}
+        ${songs.map((answer) => templateAnswer(answer)).join(``)}
       </form>
     </div>
   </section>`;
 
   const screenLevelArtist = getElementFromTemplate(templateMain);
 
-  const answerCollection = screenLevelArtist.querySelectorAll(`.main-answer`);
+  const answerCollection = screenLevelArtist.querySelectorAll(`.main-answer-r`);
 
-  const onClickaAnswer = function () {
-    setScreen();
+  const checkAnswer = function (element) {
+    const answerID = element.id;
+    const currentID = trueSongs.id;
+    if (answerID === currentID) {
+      setScreen(true);
+    } else {
+      setScreen(false);
+    };
+  };
+  const onClickaAnswer = function (event) {
+    checkAnswer(event.target);
   };
 
   for (const answer of answerCollection) {
-    answer.addEventListener(`click`, onClickaAnswer);
+    answer.addEventListener(`change`, onClickaAnswer);
   }
 
   return screenLevelArtist;

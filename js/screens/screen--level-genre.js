@@ -1,52 +1,77 @@
 import moduleTimer from './part/module-timer';
 import getElementFromTemplate from '../utils/get-element-from-template';
 import setScreen from '../controllers/set-screen';
-export default (data) => {
+export default (songs, trueSongs) => {
 
-  const templateAnswer = (answer) => `<div class="genre-answer">
-      <div class="player-wrapper"></div>
-      <input type="checkbox" name="answer" value="${answer.value}" id="${answer.id}">
-      <label class="genre-answer-check" for="${answer.id}"></label>
-    </div>`;
+  const templateAnswer = (song) => `
+  <div class="genre-answer">
+    <div class="player-wrapper">${song.genre}</div>
+    <input type="checkbox" name="answer" value="${song.value}" id="${song.id}">
+    <label class="genre-answer-check" for="${song.id}"></label>
+  </div>`;
 
   const templateMain = `
   <section class="main main--level main--level-genre">
     ${moduleTimer()}
     <div class="main-wrap">
-      <h2 class="title main-title">Выберите инди-рок треки</h2>
+      <h2 class="title main-title">Выберите трек(и) в "${trueSongs.genre}" стиле</h2>
       <form class="genre">
-        ${data.map((answer) => templateAnswer(answer)).join(``)}
+        ${songs.map((song) => templateAnswer(song)).join(``)}
         <button class="genre-answer-send" type="submit" disabled>Ответить</button>
       </form>
     </div>
   </section>`;
 
   const screenLevelGenre = getElementFromTemplate(templateMain);
-  const sendButton = screenLevelGenre.querySelector(`.genre-answer-send`);
+  const submitButtom = screenLevelGenre.querySelector(`.genre-answer-send`);
   const checkboxCollection = screenLevelGenre.querySelectorAll(`input[type="checkbox"]`);
 
+  //получение эталонных ответов
+  const curentAnswers = songs.map(function (song) {
+    return song.genre === trueSongs.genre
+  });
+
+  //сравнение текущих ответов с эталоном
+  const checkAnswer = function () {
+    let valid = false;
+    for (var i = 0; i < checkboxCollection.length; i++) {
+      if (checkboxCollection[i].checked === curentAnswers[i]) {
+        valid = true;
+      } else{
+        valid = false;
+        break;
+      }
+    }
+    console.log(valid)
+    return valid;
+  };
+
   // Проверка, если хотябы 1 секбокс выбран;
-  const validateForm = function () {
+  const setStateSubmitButtom = function () {
     for (const checkbox of checkboxCollection) {
       if (checkbox.checked) {
-        sendButton.disabled = false;
+        submitButtom.disabled = false;
         break;
       } else {
-        sendButton.disabled = true;
+        submitButtom.disabled = true;
       }
     }
   };
 
+  const onChangeCheckbox = function () {
+    setStateSubmitButtom();
+  };
+
   for (const checkbox of checkboxCollection) {
-    checkbox.addEventListener(`change`, validateForm);
+    checkbox.addEventListener(`change`, onChangeCheckbox);
   }
 
   const onClickSendButton = function (event) {
     event.preventDefault();
-    setScreen();
+    setScreen(checkAnswer());
   };
 
-  sendButton.addEventListener(`click`, onClickSendButton);
+  submitButtom.addEventListener(`click`, onClickSendButton);
 
   return screenLevelGenre;
 };
