@@ -1,8 +1,8 @@
 import moduleTimer from './part/module-timer';
 import getElementFromTemplate from '../utils/get-element-from-template';
 import setScreen from '../controllers/set-screen';
-export default (songs, trueSongs) => {
 
+export default (songs, trueSongs) => {
   const templateAnswer = (song) => `
   <div class="genre-answer">
     <div class="player-wrapper">${song.genre}</div>
@@ -26,23 +26,22 @@ export default (songs, trueSongs) => {
   const submitButtom = screenLevelGenre.querySelector(`.genre-answer-send`);
   const checkboxCollection = screenLevelGenre.querySelectorAll(`input[type="checkbox"]`);
 
-  //получение эталонных ответов
+  // получение эталонных ответов
   const curentAnswers = songs.map(function (song) {
-    return song.genre === trueSongs.genre
+    return song.genre === trueSongs.genre;
   });
 
-  //сравнение текущих ответов с эталоном
+  // сравнение текущих ответов с эталоном
   const checkAnswer = function () {
     let valid = false;
-    for (var i = 0; i < checkboxCollection.length; i++) {
+    for (let i = 0; i < checkboxCollection.length; i++) {
       if (checkboxCollection[i].checked === curentAnswers[i]) {
         valid = true;
-      } else{
+      } else {
         valid = false;
         break;
       }
     }
-    console.log(valid)
     return valid;
   };
 

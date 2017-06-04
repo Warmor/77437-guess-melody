@@ -7,8 +7,6 @@ import screenLevelGenre from '../screens/screen--level-genre';
 import screenLevelSuccess from '../screens/screen--result--success';
 import screenLevelFail from '../screens/screen--result--fail';
 
-
-
 const getRandomItem = function (array) {
   const randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
@@ -57,10 +55,9 @@ const setScreen = function (answer) {
     data.curentQuest = 0;
   } else {
     const screenLevelQuest = getRandomElement([generateLevelArtist, generateLevelGenre]);
-    generateLevelGenre();
+    screenLevelQuest();
     ++data.curentQuest;
   }
-  console.log('totalScore =>', data.totalScore)
 };
 
 export default setScreen;

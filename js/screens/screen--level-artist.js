@@ -1,8 +1,8 @@
 import moduleTimer from './part/module-timer';
 import getElementFromTemplate from '../utils/get-element-from-template';
 import setScreen from '../controllers/set-screen';
-export default (songs, trueSongs) => {
 
+export default (songs, trueSongs) => {
   const templateAnswer = (answer) => `
     <div class="main-answer-wrapper">
       <input class="main-answer-r" type="radio" id="${answer.id}" name="answer" value="${answer.value}" />
@@ -37,7 +37,7 @@ export default (songs, trueSongs) => {
       setScreen(true);
     } else {
       setScreen(false);
-    };
+    }
   };
   const onClickaAnswer = function (event) {
     checkAnswer(event.target);

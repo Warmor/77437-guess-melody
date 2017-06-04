@@ -1,5 +1,6 @@
 import getElementFromTemplate from '../utils/get-element-from-template';
 import setScreen from '../controllers/set-screen';
+
 export default (totalScore) => {
   const template = `
   <section class="main main--result main--result-success">
