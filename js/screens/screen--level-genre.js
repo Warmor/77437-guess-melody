@@ -2,7 +2,7 @@ import moduleTimer from './part/module-timer';
 import getElementFromTemplate from '../utils/get-element-from-template';
 import setScreen from '../controllers/set-screen';
 
-export default (songs, trueSongs) => {
+export default (songs, trueSong) => {
   const templateAnswer = (song) => `
   <div class="genre-answer">
     <div class="player-wrapper">${song.genre}</div>
@@ -14,7 +14,7 @@ export default (songs, trueSongs) => {
   <section class="main main--level main--level-genre">
     ${moduleTimer()}
     <div class="main-wrap">
-      <h2 class="title main-title">Выберите трек(и) в "${trueSongs.genre}" стиле</h2>
+      <h2 class="title main-title">Выберите трек(и) в "${trueSong.genre}" стиле</h2>
       <form class="genre">
         ${songs.map((song) => templateAnswer(song)).join(``)}
         <button class="genre-answer-send" type="submit" disabled>Ответить</button>
@@ -28,7 +28,7 @@ export default (songs, trueSongs) => {
 
   // получение эталонных ответов
   const curentAnswers = songs.map(function (song) {
-    return song.genre === trueSongs.genre;
+    return song.genre === trueSong.genre;
   });
 
   // сравнение текущих ответов с эталоном
@@ -47,27 +47,24 @@ export default (songs, trueSongs) => {
 
   // Проверка, если хотябы 1 секбокс выбран;
   const setStateSubmitButtom = function () {
+    let anyCheckboxChecked = false;
     for (const checkbox of checkboxCollection) {
       if (checkbox.checked) {
-        submitButtom.disabled = false;
+        anyCheckboxChecked = true;
         break;
-      } else {
-        submitButtom.disabled = true;
       }
     }
-  };
-
-  const onChangeCheckbox = function () {
-    setStateSubmitButtom();
+    submitButtom.disabled = !anyCheckboxChecked;
   };
 
   for (const checkbox of checkboxCollection) {
-    checkbox.addEventListener(`change`, onChangeCheckbox);
+    checkbox.addEventListener(`change`, setStateSubmitButtom);
   }
 
   const onClickSendButton = function (event) {
     event.preventDefault();
-    setScreen(checkAnswer());
+    const answer = checkAnswer();
+    setScreen(answer);
   };
 
   submitButtom.addEventListener(`click`, onClickSendButton);

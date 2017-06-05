@@ -1,6 +1,6 @@
 export default {
-  maxQuest: 3,
-  curentQuest: 0,
+  maxQuestion: 3,
+  curentQuestion: 0,
   totalScore: 0,
   songs: [
     {

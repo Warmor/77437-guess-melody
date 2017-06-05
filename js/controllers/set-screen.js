@@ -12,13 +12,9 @@ const getRandomItem = function (array) {
   return array[randomIndex];
 };
 
-const choiceCurentAnswer = function (songs) {
-  return getRandomItem(songs);
-};
-
-const createStackSoung = function (quantity) {
+const getUniqueSongs = function (size) {
   const songsSet = new Set();
-  for (; songsSet.size < quantity;) {
+  while (songsSet.size < size) {
     songsSet.add(getRandomItem(data.songs));
   }
   const songs = [...songsSet];
@@ -26,37 +22,38 @@ const createStackSoung = function (quantity) {
 };
 
 const generateLevelArtist = function () {
-  const songs = createStackSoung(3);
-  const trueSoung = choiceCurentAnswer(songs);
-  renderScreen(screenLevelArtist(songs, trueSoung));
+  const songs = getUniqueSongs(3);
+  const trueSong = getRandomItem(songs);
+  renderScreen(screenLevelArtist(songs, trueSong));
 };
 
 const generateLevelGenre = function () {
-  const songs = createStackSoung(4);
-  const trueSoung = choiceCurentAnswer(songs);
-  renderScreen(screenLevelGenre(songs, trueSoung));
+  const songs = getUniqueSongs(4);
+  const trueSong = getRandomItem(songs);
+  renderScreen(screenLevelGenre(songs, trueSong));
 };
 
 const setScreen = function (answer) {
-  if (answer) {
-    ++data.totalScore;
-  }
-  if (data.curentQuest === 0) {
+  if (data.curentQuestion === 0) {
     renderScreen(screenWelcome());
-    ++data.curentQuest;
+    data.curentQuestion++;
     data.totalScore = 0;
     return;
-  } else if (data.curentQuest > data.maxQuest) {
+  }
+  if (answer) {
+    data.totalScore++;
+  }
+  if (data.curentQuestion > data.maxQuestion) {
     if (data.totalScore > 0) {
       renderScreen(screenLevelSuccess(data.totalScore));
     } else {
       renderScreen(screenLevelFail());
     }
-    data.curentQuest = 0;
+    data.curentQuestion = 0;
   } else {
     const screenLevelQuest = getRandomElement([generateLevelArtist, generateLevelGenre]);
     screenLevelQuest();
-    ++data.curentQuest;
+    data.curentQuestion++;
   }
 };
 
