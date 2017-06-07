@@ -1,4 +1,3 @@
-import screenWelcome from './screens/screen--welcome';
-import renderScreen from './utils/render-screen';
+import setScreen from './controllers/set-screen';
 
-renderScreen(screenWelcome);
+setScreen();

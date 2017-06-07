@@ -1,7 +1,7 @@
 const getElementFromTemplate = function (template) {
-  const container = document.createElement(`div`);
+  const container = document.createElement(`template`);
   container.innerHTML = template;
-  return container.children[0];
+  return container.content;
 };
 
 export default getElementFromTemplate;
