@@ -1,6 +1,5 @@
-import moduleTimer from './part/module-timer';
 import getElementFromTemplate from '../utils/get-element-from-template';
-import setScreen from '../controllers/set-screen';
+import {onQuestionAnswered} from '../controllers/game-controller';
 
 export default (songs, trueSong) => {
   const templateAnswer = (answer) => `
@@ -14,9 +13,6 @@ export default (songs, trueSong) => {
 
   const templateMain = `
   <section class="main main--level main--level-artist">
-
-    ${moduleTimer()}
-
     <div class="main-wrap">
       <h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper">${trueSong.filePath}</div>
@@ -34,13 +30,15 @@ export default (songs, trueSong) => {
     const answerID = element.id;
     const currentID = trueSong.id;
     if (answerID === currentID) {
-      setScreen(true);
+      return true;
     } else {
-      setScreen(false);
+      return false;
     }
+
   };
   const onAnswerClick = function (event) {
-    checkAnswer(event.target);
+    const answer = checkAnswer(event.target);
+    onQuestionAnswered(answer);
   };
 
   for (const answer of answerCollection) {

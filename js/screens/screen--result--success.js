@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../utils/get-element-from-template';
-import setScreen from '../controllers/set-screen';
+import {onRepeatGame} from '../controllers/game-controller';
 
 export default (totalScore) => {
   const template = `
@@ -17,7 +17,7 @@ export default (totalScore) => {
   const replayButton = screenResultSuccess.querySelector(`.main-replay`);
 
   const onClickReplayButton = function () {
-    setScreen();
+    onRepeatGame();
   };
 
   replayButton.addEventListener(`click`, onClickReplayButton);

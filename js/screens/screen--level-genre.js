@@ -1,6 +1,5 @@
-import moduleTimer from './part/module-timer';
 import getElementFromTemplate from '../utils/get-element-from-template';
-import setScreen from '../controllers/set-screen';
+import {onQuestionAnswered} from '../controllers/game-controller';
 
 export default (songs, trueSong) => {
   const templateAnswer = (song) => `
@@ -12,7 +11,6 @@ export default (songs, trueSong) => {
 
   const templateMain = `
   <section class="main main--level main--level-genre">
-    ${moduleTimer()}
     <div class="main-wrap">
       <h2 class="title main-title">Выберите трек(и) в "${trueSong.genre}" стиле</h2>
       <form class="genre">
@@ -64,7 +62,7 @@ export default (songs, trueSong) => {
   const onClickSendButton = function (event) {
     event.preventDefault();
     const answer = checkAnswer();
-    setScreen(answer);
+    onQuestionAnswered(answer);
   };
 
   submitButtom.addEventListener(`click`, onClickSendButton);

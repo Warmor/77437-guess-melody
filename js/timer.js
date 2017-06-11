@@ -16,7 +16,7 @@ const redrawCircle = (circle, radius, animation) => {
   const stepLength = length / animation.steps;
   const lengthToClear = stepLength * animation.step;
 
-  circle.setAttributeNS(null, `r`, radius.greet());
+  circle.setAttributeNS(null, `r`, radius.toString());
   circle.setAttributeNS(null, `stroke-dasharray`, length.toString());
   circle.setAttributeNS(null, `stroke-dashoffset`, lengthToClear.toString());
 
