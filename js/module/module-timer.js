@@ -3,7 +3,7 @@ import renderScreen from '../utils/render-screen';
 
 
 const app = document.querySelector(`.app`);
-const template = `
+const templateTimer = () => `
   <div class="main-timer">
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
       <circle cx="390" cy="390" r="370" class="timer-line" style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
@@ -17,19 +17,16 @@ const template = `
   </div>
 `;
 
-const moduleTimer = getElementFromTemplate(template);
-
 const renderTimer = function (element) {
   app.appendChild(element);
 };
 
 const destroyTimer = function () {
-  app.querySelector('.main-timer').remove();
-  // app.removeChild(app.querySelector('.main-timer'))
+  app.removeChild(app.querySelector('.main-timer'))
 };
 
 const initTimer = function () {
-  renderTimer(moduleTimer);
+  renderTimer(getElementFromTemplate(templateTimer()));
 };
 
 const timer = {
