@@ -8,7 +8,7 @@ import screenLevelArtist from '../screens/screen--level-artist';
 import screenLevelGenre from '../screens/screen--level-genre';
 import screenLevelSuccess from '../screens/screen--result--success';
 import screenLevelFail from '../screens/screen--result--fail';
-import moduleTimer from '../module/module-timer';
+import timer from '../module/module-timer';
 
 let actualGameData = {};
 
@@ -73,12 +73,12 @@ const startGame = function () {
     score: gameData.score
   };
   actualGameData.screen = 'level';
-  // startTimer
+  timer.init();
   switchScreen();
 };
 
 const stopGame = function () {
-  // stopTimer
+  timer.destroy();
   actualGameData.screen = 'result';
   setResultScreen();
 };

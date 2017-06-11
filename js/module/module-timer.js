@@ -1,19 +1,40 @@
-export default () => {
-  const template = `
-    <div class="main-timer">
-      <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
-        <circle cx="390" cy="390" r="370" class="timer-line" style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
-      </svg>
+import getElementFromTemplate from '../utils/get-element-from-template';
+import renderScreen from '../utils/render-screen';
 
-      <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-        <span class="timer-value-mins">02</span><!--
-        --><span class="timer-value-dots">:</span><!--
-        --><span class="timer-value-secs">00</span>
-      </div>
+
+const app = document.querySelector(`.app`);
+const template = `
+  <div class="main-timer">
+    <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
+      <circle cx="390" cy="390" r="370" class="timer-line" style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
+    </svg>
+
+    <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
+      <span class="timer-value-mins">02</span><!--
+      --><span class="timer-value-dots">:</span><!--
+      --><span class="timer-value-secs">00</span>
     </div>
-  `;
+  </div>
+`;
 
-  const moduleTimer = {};
+const moduleTimer = getElementFromTemplate(template);
 
-  return moduleTimer;
+const renderTimer = function (element) {
+  app.appendChild(element);
 };
+
+const destroyTimer = function () {
+  app.querySelector('.main-timer').remove();
+  // app.removeChild(app.querySelector('.main-timer'))
+};
+
+const initTimer = function () {
+  renderTimer(moduleTimer);
+};
+
+const timer = {
+  init: initTimer,
+  destroy: destroyTimer
+}
+
+export default timer

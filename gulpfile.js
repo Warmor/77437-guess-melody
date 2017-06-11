@@ -47,6 +47,12 @@ gulp.task('scripts', function () {
     .pipe(gulp.dest('build/js'));
 });
 
+gulp.task('scripts-helper', function () {
+  return gulp.src(['js/animate.js','js/player.js','js/time-format.js','js/timer.js'])
+    .pipe(plumber())
+    .pipe(gulp.dest('build/js'));
+});
+
 gulp.task('test', function () {
   return gulp
     .src(['js/**/*.test.js'], { read: false })
@@ -72,10 +78,11 @@ gulp.task('copy-html', function () {
     .pipe(server.stream());
 });
 
-gulp.task('copy', ['copy-html', 'scripts', 'style'], function () {
+gulp.task('copy', ['copy-html', 'scripts', 'scripts-helper', 'style'], function () {
   return gulp.src([
     'fonts/**/*.{woff,woff2}',
-    'img/*.*'
+    'img/*.*',
+    'mp3/*.*'
   ], {base: '.'})
     .pipe(gulp.dest('build'));
 });
