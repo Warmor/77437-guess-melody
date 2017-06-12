@@ -1,5 +1,4 @@
 import getElementFromTemplate from '../utils/get-element-from-template';
-import renderScreen from '../utils/render-screen';
 const templateTimer = (timeObj) => `
   <div class="main-timer">
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -21,10 +20,6 @@ const renderTimer = function (element) {
   app.appendChild(element);
 };
 
-const trimZero = function (sting) {
-  console.log(sting)
-};
-
 const setTimeLeft = function (time) {
   timer.timeLeft = time;
 };
@@ -34,16 +29,16 @@ const getTimeLeft = function () {
 };
 
 timer.stop = function () {
-  app.removeChild(app.querySelector('.main-timer'));
+  app.removeChild(app.querySelector(`.main-timer`));
   return timer.timeLeft;
 };
 
 timer.start = function (totalTime, stopCallback) {
-  const timeObj = window.formatTime(totalTime * 1000, 0)
+  const timeObj = window.formatTime(totalTime * 1000, 0);
   renderTimer(getElementFromTemplate(templateTimer(timeObj)));
   setTimeLeft(totalTime);
   window.initializeCountdown(totalTime, getTimeLeft, stopCallback);
 };
 
 
-export default timer
+export default timer;

@@ -40,7 +40,7 @@ const setWelcomeScreen = function () {
 
 const setGameScreen = function () {
   const screenLevelQuest = getRandomElement([generateLevelArtist, generateLevelGenre]);
-  generateLevelArtist();
+  screenLevelQuest();
 };
 
 const computePercentage = (time, score, statistics) => {
@@ -53,8 +53,6 @@ const computePercentage = (time, score, statistics) => {
   return Math.trunc(((newStatistick.length - newStatistick.indexOf(myStatistick)) / newStatistick.length) * 100);
 };
 
-
-
 const setResultScreen = function () {
   if (actualGameData.score > 0 && actualGameData.lives > 0 && actualGameData.time > 0) {
     renderScreen(screenLevelSuccess(actualGameData.score, actualGameData.percentage));
@@ -65,13 +63,13 @@ const setResultScreen = function () {
 
 const switchScreen = function () {
   switch (actualGameData.screen) {
-    case 'window':
+    case `window`:
       setWelcomeScreen();
       break;
-    case 'level':
+    case `level`:
       setGameScreen();
       break;
-    case 'result':
+    case `result`:
       setResultScreen();
       break;
   }
@@ -79,7 +77,7 @@ const switchScreen = function () {
 
 const stopGame = function () {
   actualGameData.time = timer.stop();
-  actualGameData.screen = 'result';
+  actualGameData.screen = `result`;
   actualGameData.percentage = computePercentage(actualGameData.time, actualGameData.score, statisticsData);
   setResultScreen();
 };
@@ -93,7 +91,7 @@ const startGame = function () {
     score: gameData.score,
     percentage: gameData.percentage
   };
-  actualGameData.screen = 'level';
+  actualGameData.screen = `level`;
   timer.start(actualGameData.time, stopGame);
   switchScreen();
 };
@@ -105,7 +103,7 @@ const onQuestionAnswered = function (answer) {
   } else {
     actualGameData.lives--;
   }
-  if(actualGameData.lives === 0 || actualGameData.questions === 0) {
+  if (actualGameData.lives === 0 || actualGameData.questions === 0) {
     stopGame();
     return;
   }
@@ -113,7 +111,7 @@ const onQuestionAnswered = function (answer) {
 };
 
 const onRepeatGame = function () {
-  actualGameData.screen = 'window';
+  actualGameData.screen = `window`;
   switchScreen();
 };
 

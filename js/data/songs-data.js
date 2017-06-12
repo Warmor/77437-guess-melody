@@ -63,5 +63,4 @@ export default [
     filePath: `/mp3/ThisCentury`,
     genre: `Pop`
   }
-]
-
+];

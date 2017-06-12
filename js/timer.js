@@ -48,5 +48,8 @@ window.initializeCountdown = (totalTime = 10, countTimeLeft, stopCallback) => {
     redrawCircle(element, radius, animation);
     redrawTimer(timer, animation);
     countTimeLeft();
-  }, () => {timer.classList.add(`timer-value--finished`);stopCallback()});
+  }, () => {
+    timer.classList.add(`timer-value--finished`);
+    stopCallback();
+  });
 };
