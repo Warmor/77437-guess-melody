@@ -91,7 +91,7 @@ gulp.task('clean', function () {
   return del('build');
 });
 
-gulp.task('js-watch', ['scripts'], function (done) {
+gulp.task('js-watch', ['scripts', 'scripts-helper'], function (done) {
   server.reload();
   done();
 });

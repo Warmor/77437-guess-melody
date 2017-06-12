@@ -1,5 +1,6 @@
 import gameData from '../data/game-data';
 import songsData from '../data/songs-data';
+import statisticsData from '../data/data-statistics';
 import getRandomElement from '../utils/get-random-element';
 import getRandomItem from '../utils/get-random-item';
 import renderScreen from '../utils/render-screen';
@@ -42,9 +43,21 @@ const setGameScreen = function () {
   generateLevelArtist();
 };
 
+const computePercentage = (time, score, statistics) => {
+  const myStatistick = {time, score};
+  const newStatistick = statistics.slice();
+  newStatistick.push(myStatistick);
+  newStatistick.sort(function (a, b) {
+    return b.score - a.score || a.time - b.time;
+  });
+  return Math.trunc(((newStatistick.length - newStatistick.indexOf(myStatistick)) / newStatistick.length) * 100);
+};
+
+
+
 const setResultScreen = function () {
-  if (actualGameData.score > 0 && actualGameData.lives > 0 && actualGameData.timer > 0) {
-    renderScreen(screenLevelSuccess(actualGameData.score));
+  if (actualGameData.score > 0 && actualGameData.lives > 0 && actualGameData.time > 0) {
+    renderScreen(screenLevelSuccess(actualGameData.score, actualGameData.percentage));
   } else {
     renderScreen(screenLevelFail());
   }
@@ -64,23 +77,25 @@ const switchScreen = function () {
   }
 };
 
+const stopGame = function () {
+  actualGameData.time = timer.stop();
+  actualGameData.screen = 'result';
+  actualGameData.percentage = computePercentage(actualGameData.time, actualGameData.score, statisticsData);
+  setResultScreen();
+};
+
 const startGame = function () {
   actualGameData = {
     screen: gameData.screen,
     questions: gameData.questions,
-    timer: gameData.timer,
+    time: gameData.timer,
     lives: gameData.lives,
-    score: gameData.score
+    score: gameData.score,
+    percentage: gameData.percentage
   };
   actualGameData.screen = 'level';
-  timer.init();
+  timer.start(actualGameData.time, stopGame);
   switchScreen();
-};
-
-const stopGame = function () {
-  timer.destroy();
-  actualGameData.screen = 'result';
-  setResultScreen();
 };
 
 const onQuestionAnswered = function (answer) {

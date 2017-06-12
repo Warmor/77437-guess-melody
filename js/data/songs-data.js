@@ -12,7 +12,7 @@ export default [
     value: `val-2`,
     id: `a-2`,
     imgPath: `/img/default.png`,
-    filePath: `/mp3/Краснознаменная`,
+    filePath: `/mp3/CrazyTown`,
     genre: `Rock`
   },
   {
@@ -60,7 +60,7 @@ export default [
     value: `val-8`,
     id: `a-8`,
     imgPath: `/img/default.png`,
-    filePath: `/mp3/This`,
+    filePath: `/mp3/ThisCentury`,
     genre: `Pop`
   }
 ]
