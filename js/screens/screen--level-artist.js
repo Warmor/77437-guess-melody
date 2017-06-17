@@ -1,7 +1,6 @@
 import getElementFromTemplate from '../utils/get-element-from-template';
-import {onQuestionAnswered} from '../controllers/game-controller';
 
-export default (songs, trueSong) => {
+export default ({songs, trueSong, answerCallback}) => {
   const templateAnswer = (answer) => `
     <div class="main-answer-wrapper">
       <input class="main-answer-r" type="radio" id="${answer.id}" name="answer" value="${answer.value}" />
@@ -37,8 +36,8 @@ export default (songs, trueSong) => {
 
   };
   const onAnswerClick = function (event) {
-    const answer = checkAnswer(event.target);
-    onQuestionAnswered(answer);
+    const isAnswerCorrect = checkAnswer(event.target);
+    answerCallback(isAnswerCorrect);
   };
 
   for (const answer of answerCollection) {

@@ -7,6 +7,7 @@ const statistics = [
   {time: 50, score: 7},
   {time: 21, score: 6},
   {time: 40, score: 5},
-  {time: 50, score: 4}
+  {time: 50, score: 4},
 ];
+
 export default statistics;

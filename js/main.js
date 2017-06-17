@@ -1,3 +1,5 @@
-import {setWelcomeScreen} from './controllers/game-controller';
+import {resetState} from './data/game-state';
+import {renderState} from './controllers/renderer-controller';
 
-setWelcomeScreen();
+resetState();
+renderState();

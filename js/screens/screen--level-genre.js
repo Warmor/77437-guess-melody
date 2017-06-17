@@ -1,7 +1,6 @@
 import getElementFromTemplate from '../utils/get-element-from-template';
-import {onQuestionAnswered} from '../controllers/game-controller';
 
-export default (songs, trueSong) => {
+export default ({songs, trueSong, answerCallback}) => {
   const templateAnswer = (song) => `
   <div class="genre-answer">
     <div class="player-wrapper">${song.genre}</div>
@@ -61,8 +60,8 @@ export default (songs, trueSong) => {
 
   const onClickSendButton = function (event) {
     event.preventDefault();
-    const answer = checkAnswer();
-    onQuestionAnswered(answer);
+    const isAnswerCorrect = checkAnswer();
+    answerCallback(isAnswerCorrect);
   };
 
   submitButtom.addEventListener(`click`, onClickSendButton);
