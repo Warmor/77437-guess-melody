@@ -16,7 +16,7 @@ const redrawCircle = (circle, radius, animation) => {
   const stepLength = length / animation.steps;
   const lengthToClear = stepLength * animation.step;
 
-  circle.setAttributeNS(null, `r`, radius.greet());
+  circle.setAttributeNS(null, `r`, radius.toString());
   circle.setAttributeNS(null, `stroke-dasharray`, length.toString());
   circle.setAttributeNS(null, `stroke-dashoffset`, lengthToClear.toString());
 
@@ -24,7 +24,7 @@ const redrawCircle = (circle, radius, animation) => {
 };
 
 
-const addLeadingZero = (val) => val < 10 ? `0${val}` : val;
+window.addLeadingZero = (val) => val < 10 ? `0${val}` : val;
 
 
 const redrawTimer = (timer, animation) => {
@@ -32,20 +32,24 @@ const redrawTimer = (timer, animation) => {
   const passed = animation.stepDuration * animation.step;
   const timeLeft = window.formatTime(total, passed);
 
-  timer.querySelector(`.timer-value-mins`).textContent = addLeadingZero(timeLeft.minutes);
-  timer.querySelector(`.timer-value-secs`).textContent = addLeadingZero(timeLeft.seconds);
+  timer.querySelector(`.timer-value-mins`).textContent = window.addLeadingZero(timeLeft.minutes);
+  timer.querySelector(`.timer-value-secs`).textContent = window.addLeadingZero(timeLeft.seconds);
 
   return timer;
 };
 
 
-window.initializeCountdown = () => {
+window.initializeCountdown = (totalTime = 10, countTimeLeft, stopCallback) => {
   const element = document.querySelector(`.timer-line`);
   const radius = parseInt(element.getAttributeNS(null, `r`), 10);
   const timer = document.querySelector(`.timer-value`);
 
-  return window.animation.animate(window.animation.getAnimation(0, 1000, 4), (animation) => {
+  return window.animation.animate(window.animation.getAnimation(0, 1000, totalTime), (animation) => {
     redrawCircle(element, radius, animation);
     redrawTimer(timer, animation);
-  }, () => timer.classList.add(`timer-value--finished`));
+    countTimeLeft();
+  }, () => {
+    timer.classList.add(`timer-value--finished`);
+    stopCallback();
+  });
 };

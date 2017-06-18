@@ -1,8 +1,6 @@
-import moduleTimer from './part/module-timer';
 import getElementFromTemplate from '../utils/get-element-from-template';
-import setScreen from '../controllers/set-screen';
 
-export default (songs, trueSong) => {
+export default ({songs, trueSong, answerCallback}) => {
   const templateAnswer = (answer) => `
     <div class="main-answer-wrapper">
       <input class="main-answer-r" type="radio" id="${answer.id}" name="answer" value="${answer.value}" />
@@ -14,9 +12,6 @@ export default (songs, trueSong) => {
 
   const templateMain = `
   <section class="main main--level main--level-artist">
-
-    ${moduleTimer()}
-
     <div class="main-wrap">
       <h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper">${trueSong.filePath}</div>
@@ -34,13 +29,15 @@ export default (songs, trueSong) => {
     const answerID = element.id;
     const currentID = trueSong.id;
     if (answerID === currentID) {
-      setScreen(true);
+      return true;
     } else {
-      setScreen(false);
+      return false;
     }
+
   };
   const onAnswerClick = function (event) {
-    checkAnswer(event.target);
+    const isAnswerCorrect = checkAnswer(event.target);
+    answerCallback(isAnswerCorrect);
   };
 
   for (const answer of answerCollection) {

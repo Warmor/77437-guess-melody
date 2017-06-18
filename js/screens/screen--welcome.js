@@ -1,7 +1,6 @@
-import setScreen from '../controllers/set-screen';
 import getElementFromTemplate from '../utils/get-element-from-template';
 
-export default () => {
+export default ({onPlayClick}) => {
   const template = `
   <section class="main main--welcome">
     <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
@@ -18,11 +17,7 @@ export default () => {
 
   const playGameButton = screenWelcome.querySelector(`.main-play`);
 
-  const onClickButton = function () {
-    setScreen();
-  };
-
-  playGameButton.addEventListener(`click`, onClickButton);
+  playGameButton.addEventListener(`click`, onPlayClick);
 
   return screenWelcome;
 };

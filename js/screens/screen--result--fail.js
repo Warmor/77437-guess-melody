@@ -1,7 +1,6 @@
 import getElementFromTemplate from '../utils/get-element-from-template';
-import setScreen from '../controllers/set-screen';
 
-export default () => {
+export default ({onClickReplay}) => {
   const template = `
   <section class="main main--result main--result-fail">
     <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
@@ -15,11 +14,7 @@ export default () => {
 
   const replayButton = screenResultFail.querySelector(`.main-replay`);
 
-  const onClickReplayButton = function () {
-    setScreen();
-  };
-
-  replayButton.addEventListener(`click`, onClickReplayButton);
+  replayButton.addEventListener(`click`, onClickReplay);
 
   return screenResultFail;
 };

@@ -1,3 +1,5 @@
-import setScreen from './controllers/set-screen';
+import {resetState} from './data/game-state';
+import {renderState} from './controllers/renderer-controller';
 
-setScreen();
+resetState();
+renderState();
