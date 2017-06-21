@@ -1,5 +1,3 @@
-import getElementFromTemplate from '../utils/get-element-from-template';
-
 export default class AbstractView {
   get template() {}
 

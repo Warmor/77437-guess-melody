@@ -2,7 +2,7 @@ import View from './view';
 
 export default class ViewWelcome extends View {
 
-  get template () {
+  get template() {
     return `
       <section class="main main--welcome">
         <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>

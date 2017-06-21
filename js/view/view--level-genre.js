@@ -1,13 +1,13 @@
 import View from './view';
 
 export default class ViewLevelGenre extends View {
-  constructor (songs, trueSong) {
+  constructor(songs, trueSong) {
     super();
     this.songs = songs;
     this.trueSong = trueSong;
   }
 
-  get template () {
+  get template() {
     return `
       <section class="main main--level main--level-genre">
         <div class="main-wrap">
@@ -20,7 +20,7 @@ export default class ViewLevelGenre extends View {
       </section>`;
   }
 
-  templateAnswer (song) {
+  templateAnswer(song) {
     return `
       <div class="genre-answer">
         <div class="player-wrapper">${song.genre}</div>
@@ -29,7 +29,7 @@ export default class ViewLevelGenre extends View {
       </div>`;
   }
 
-  bind () {
+  bind() {
     this.submitButtom = this.element.querySelector(`.genre-answer-send`);
     this.checkboxCollection = this.element.querySelectorAll(`input[type="checkbox"]`);
 
@@ -40,6 +40,6 @@ export default class ViewLevelGenre extends View {
     this.submitButtom.addEventListener(`click`, this.onClickSendButton);
   }
 
-  onClickSendButton () {}
-  setStateSubmitButtom () {}
+  onClickSendButton() {}
+  setStateSubmitButtom() {}
 }

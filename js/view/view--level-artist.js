@@ -7,7 +7,7 @@ export default class ViewLevelArtist extends View {
     this.trueSong = trueSong;
   }
 
-  get template () {
+  get template() {
     return `
       <section class="main main--level main--level-artist">
         <div class="main-wrap">
@@ -20,7 +20,7 @@ export default class ViewLevelArtist extends View {
       </section>`;
   }
 
-  templateAnswer (answer) {
+  templateAnswer(answer) {
     return `
       <div class="main-answer-wrapper">
         <input class="main-answer-r" type="radio" id="${answer.id}" name="answer" value="${answer.value}" />
