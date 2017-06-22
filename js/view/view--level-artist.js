@@ -31,6 +31,18 @@ export default class ViewLevelArtist extends View {
       </div>`;
   }
 
+  checkAnswer(element) {
+    const answerID = element.id;
+    const currentID = this.trueSong.id;
+    if (answerID === currentID) {
+      console.log('true');
+      return true;
+    } else {
+      console.log('false');
+      return false;
+    }
+  }
+
   bind() {
 
     this.answerCollection = this.element.querySelectorAll(`.main-answer-r`);

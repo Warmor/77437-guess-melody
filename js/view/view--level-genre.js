@@ -5,6 +5,9 @@ export default class ViewLevelGenre extends View {
     super();
     this.songs = songs;
     this.trueSong = trueSong;
+    this.curentAnswers = songs.map(function (song) {
+      return song.genre === trueSong.genre;
+    });
   }
 
   get template() {
@@ -29,17 +32,38 @@ export default class ViewLevelGenre extends View {
       </div>`;
   }
 
+  checkAnswer() {
+    let valid = false;
+    for (let i = 0; i < this.checkboxCollection.length; i++) {
+      if (this.checkboxCollection[i].checked === this.curentAnswers[i]) {
+        valid = true;
+      } else {
+        valid = false;
+        break;
+      }
+    }
+    return valid;
+  }
+
   bind() {
     this.submitButtom = this.element.querySelector(`.genre-answer-send`);
     this.checkboxCollection = this.element.querySelectorAll(`input[type="checkbox"]`);
 
     for (const checkbox of this.checkboxCollection) {
-      checkbox.addEventListener(`change`, this.setStateSubmitButtom);
+      checkbox.addEventListener(`change`, () => {
+        let anyCheckboxChecked = false;
+        for (const checkbox of this.checkboxCollection) {
+          if (checkbox.checked) {
+            anyCheckboxChecked = true;
+            break;
+          }
+        }
+        this.submitButtom.disabled = !anyCheckboxChecked;
+      });
     }
 
     this.submitButtom.addEventListener(`click`, this.onClickSendButton);
   }
 
   onClickSendButton() {}
-  setStateSubmitButtom() {}
 }
