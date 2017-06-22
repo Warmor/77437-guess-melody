@@ -17,7 +17,7 @@ export default class ViewLevelGenre extends View {
           <h2 class="title main-title">Выберите трек(и) в "${this.trueSong.genre}" стиле</h2>
           <form class="genre">
             ${this.songs.map((song) => this.templateAnswer(song)).join(``)}
-            <button class="genre-answer-send" type="submit" disabled>Ответить</button>
+            <button class="genre-answer-send" type="send" disabled>Ответить</button>
           </form>
         </div>
       </section>`;
@@ -45,24 +45,26 @@ export default class ViewLevelGenre extends View {
     return valid;
   }
 
+  setStateSendButton() {
+    let anyCheckboxChecked = false;
+    for (const checkbox of this.checkboxCollection) {
+      if (checkbox.checked) {
+        anyCheckboxChecked = true;
+        break;
+      }
+    }
+    this.sendButton.disabled = !anyCheckboxChecked;
+  }
+
   bind() {
-    this.submitButtom = this.element.querySelector(`.genre-answer-send`);
+    this.sendButton = this.element.querySelector(`.genre-answer-send`);
     this.checkboxCollection = this.element.querySelectorAll(`input[type="checkbox"]`);
 
     for (const checkbox of this.checkboxCollection) {
-      checkbox.addEventListener(`change`, () => {
-        let anyCheckboxChecked = false;
-        for (const checkbox of this.checkboxCollection) {
-          if (checkbox.checked) {
-            anyCheckboxChecked = true;
-            break;
-          }
-        }
-        this.submitButtom.disabled = !anyCheckboxChecked;
-      });
+      checkbox.addEventListener(`change`, this.setStateSendButton.bind(this));
     }
 
-    this.submitButtom.addEventListener(`click`, this.onClickSendButton);
+    this.sendButton.addEventListener(`click`, this.onClickSendButton);
   }
 
   onClickSendButton() {}

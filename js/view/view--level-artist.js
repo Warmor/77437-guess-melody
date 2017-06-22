@@ -35,10 +35,8 @@ export default class ViewLevelArtist extends View {
     const answerID = element.id;
     const currentID = this.trueSong.id;
     if (answerID === currentID) {
-      console.log('true');
       return true;
     } else {
-      console.log('false');
       return false;
     }
   }
