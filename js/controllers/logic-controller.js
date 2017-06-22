@@ -6,8 +6,7 @@ import getUniqueSongs from '../utils/get-unique-songs';
 
 
 export function nextQuestion(state) {
-  // const newScreen = getRandomScreenName();
-  const newScreen = `question-genre`;
+  const newScreen = getRandomScreenName();
   let screenData;
 
   if (newScreen === `question-artist`) {
