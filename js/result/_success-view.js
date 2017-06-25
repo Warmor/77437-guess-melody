@@ -1,4 +1,4 @@
-import View from './view';
+import View from '../view';
 
 export default class ViewResultSuccess extends View {
   constructor(totalScore, percentage) {

@@ -1,12 +1,12 @@
-import View from './view';
+import View from '../view';
 
 export default class ViewLevelGenre extends View {
-  constructor(songs, trueSong) {
+  constructor(screenData) {
     super();
-    this.songs = songs;
-    this.trueSong = trueSong;
-    this.curentAnswers = songs.map(function (song) {
-      return song.genre === trueSong.genre;
+    this.songs = screenData.songs;
+    this.trueSong = screenData.trueSong;
+    this.curentAnswers = this.songs.map(function (song) {
+      return song.genre === screenData.trueSong.genre;
     });
   }
 
@@ -64,8 +64,8 @@ export default class ViewLevelGenre extends View {
       checkbox.addEventListener(`change`, this.setStateSendButton.bind(this));
     }
 
-    this.sendButton.addEventListener(`click`, this.onClickSendButton);
+    this.sendButton.addEventListener(`click`, (event) => {this.onAnswer(event)});
   }
 
-  onClickSendButton() {}
+  onAnswer() {}
 }
