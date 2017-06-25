@@ -64,7 +64,9 @@ export default class ViewLevelGenre extends View {
       checkbox.addEventListener(`change`, this.setStateSendButton.bind(this));
     }
 
-    this.sendButton.addEventListener(`click`, (event) => {this.onAnswer(event)});
+    this.sendButton.addEventListener(`click`, (event) => {
+      this.onAnswer(event);
+    });
   }
 
   onAnswer() {}

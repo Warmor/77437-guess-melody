@@ -46,7 +46,9 @@ export default class ViewLevelArtist extends View {
     this.answerCollection = this.element.querySelectorAll(`.main-answer-r`);
 
     for (const answer of this.answerCollection) {
-      answer.addEventListener(`change`, (event) => {this.onAnswer(event)});
+      answer.addEventListener(`change`, (event) => {
+        this.onAnswer(event);
+      });
     }
   }
 

@@ -83,14 +83,11 @@ class GameData {
   }
 
   createScreenData(size) {
-    const songs = this.getUniqueSongs(size)
-    const trueSong = this.getRandomItem(songs)
-    return {
-      songs: songs,
-      trueSong: trueSong
-    }
+    const songs = this.getUniqueSongs(size);
+    const trueSong = this.getRandomItem(songs);
+    return {songs, trueSong};
   }
+}
 
-};
 const gameData = new GameData();
 export default gameData;

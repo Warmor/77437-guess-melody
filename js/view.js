@@ -1,6 +1,6 @@
 export default class AbstractView {
   get template() {
-    throw new Error('need template')
+    throw new Error(`need template`);
   }
 
   render() {

@@ -20,8 +20,7 @@ class Game {
   }
 
   generateLevel() {
-    this.screenData = gameData.createScreenData(3);
-    this.view = new ArtistView(this.screenData);
+    this.getRandomView();
     this.view.onAnswer = (event) => {
       event.preventDefault();
       const isAnswerCorrect = this.view.checkAnswer(event.target);

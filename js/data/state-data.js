@@ -16,17 +16,17 @@ class StateData {
 
   tickTime() {
     this.state.time--;
-    return this.state.time
+    return this.state.time;
   }
 
   setLives(newLives) {
     this.state.lives = newLives;
-    return this.state.lives
+    return this.state.lives;
   }
 
   setScore(newScore) {
     this.state.score = newScore;
-    return this.state.score
+    return this.state.score;
   }
 
   getState() {
@@ -37,7 +37,7 @@ class StateData {
     return Object.assign(this.state, this.initialState);
   }
 
-};
+}
 
 const stateData = new StateData();
 

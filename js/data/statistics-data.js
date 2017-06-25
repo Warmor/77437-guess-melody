@@ -23,10 +23,8 @@ class StatisticsData {
     return Math.trunc(((newStatistick.length - (newStatistick.indexOf(myStatistick))) / newStatistick.length) * 100);
   }
 
-};
+}
 
 const statisticsData = new StatisticsData();
 
-export default statisticsData;;
-
-
+export default statisticsData;
