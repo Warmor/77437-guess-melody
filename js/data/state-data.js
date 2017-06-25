@@ -1,40 +1,52 @@
 class StateData {
   constructor() {
-    this.initialState = Object.freeze({
+    this._initialState = Object.freeze({
       questions: 10,
       currentQuestion: 0,
       time: 120,
       lives: 3,
       score: 0,
     });
-    this.state = {};
+    this._state = {};
   }
   nextQuestion() {
-    this.state.currentQuestion++;
-    return this.state.currentQuestion;
+    this._state.currentQuestion++;
+    return this;
   }
 
   tickTime() {
-    this.state.time--;
-    return this.state.time;
+    this._state.time--;
+    return this;
   }
 
   setLives(newLives) {
-    this.state.lives = newLives;
-    return this.state.lives;
+    this._state.lives = newLives;
+    return this;
   }
 
   setScore(newScore) {
-    this.state.score = newScore;
-    return this.state.score;
+    this._state.score = newScore;
+    return this;
   }
 
-  getState() {
-    return this.state;
+  get questions() {
+    return this._state.questions;
+  }
+  get currentQuestion() {
+    return this._state.currentQuestion;
+  }
+  get time() {
+    return this._state.time;
+  }
+  get lives() {
+    return this._state.lives;
+  }
+  get score() {
+    return this._state.score;
   }
 
   resetState() {
-    return Object.assign(this.state, this.initialState);
+    return Object.assign(this._state, this._initialState);
   }
 
 }

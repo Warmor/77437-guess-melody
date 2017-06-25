@@ -9,16 +9,16 @@ import FailView from './_fail-view';
 class Result {
   constructor() {}
 
-  generateView(state) {
-    if (state.lives < 1 || state.time < 1) {
+  generateView() {
+    if (stateData.lives < 1 || stateData.time < 1) {
       this.view = new FailView();
     } else {
-      this.view = new SuccessView(state.score, statisticsData.getPercentage(state.time, state.score));
+      this.view = new SuccessView(stateData.score, statisticsData.getPercentage(stateData.time, stateData.score));
     }
   }
 
   generateResultScreen() {
-    this.generateView(stateData.getState());
+    this.generateView();
     this.view.onClickReplay = (event) => {
       event.preventDefault();
       App.showWelcome();

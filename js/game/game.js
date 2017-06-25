@@ -24,20 +24,18 @@ class Game {
     this.view.onAnswer = (event) => {
       event.preventDefault();
       const isAnswerCorrect = this.view.checkAnswer(event.target);
-      this.onAnswered(stateData.getState(), isAnswerCorrect);
+      this.onAnswered(isAnswerCorrect);
     };
 
     renderView(this.view.element);
   }
 
-  onAnswered(state, isAnswerCorrect) {
-    const {questions, currentQuestion, score, lives} = state;
+  onAnswered(isAnswerCorrect) {
+    const isFinalQuestion = stateData.currentQuestion === stateData.questions - 1;
+    const newScore = stateData.score + (isAnswerCorrect ? 1 : 0);
+    const newLives = isAnswerCorrect ? stateData.lives : stateData.lives - 1;
 
-    const isFinalQuestion = currentQuestion === questions - 1;
-    const newScore = score + (isAnswerCorrect ? 1 : 0);
-    const newLives = isAnswerCorrect ? lives : lives - 1;
-    stateData.setScore(newScore);
-    stateData.setLives(newLives);
+    stateData.setScore(newScore).setLives(newLives);
 
     if (newLives === 0 || isFinalQuestion) {
       App.showResult();
