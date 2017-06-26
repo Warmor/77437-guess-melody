@@ -14,17 +14,17 @@ class App {
   constructor() {}
 
   static changeController(url = ``) {
-    const route = url.split(`;`)
-    switch(route[0]) {
+    const route = url.split(`;`);
+    switch (route[0]) {
       case ControllerID.GAME:
         Game.init();
-        break
+        break;
       case ControllerID.RESULT:
-        Result.init(atob(route[1]),atob(route[2]),atob(route[3]));
-        break
+        Result.init(atob(route[1]), atob(route[2]), atob(route[3]));
+        break;
       default:
         Welcome.init();
-        break
+        break;
     }
   }
 
@@ -47,6 +47,7 @@ class App {
     this.changeController(getControllerIDFromHash(location.hash));
   }
 }
+
 App.init();
 
 export default App;
