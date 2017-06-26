@@ -9,6 +9,23 @@ class StateData {
     });
     this._state = {};
   }
+
+  get questions() {
+    return this._state.questions;
+  }
+  get currentQuestion() {
+    return this._state.currentQuestion;
+  }
+  get time() {
+    return this._state.time;
+  }
+  get lives() {
+    return this._state.lives;
+  }
+  get score() {
+    return this._state.score;
+  }
+
   nextQuestion() {
     this._state.currentQuestion++;
     return this;
@@ -27,22 +44,6 @@ class StateData {
   setScore(newScore) {
     this._state.score = newScore;
     return this;
-  }
-
-  get questions() {
-    return this._state.questions;
-  }
-  get currentQuestion() {
-    return this._state.currentQuestion;
-  }
-  get time() {
-    return this._state.time;
-  }
-  get lives() {
-    return this._state.lives;
-  }
-  get score() {
-    return this._state.score;
   }
 
   resetState() {

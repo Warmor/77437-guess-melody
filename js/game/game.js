@@ -38,7 +38,7 @@ class Game {
     stateData.setScore(newScore).setLives(newLives);
 
     if (newLives === 0 || isFinalQuestion) {
-      App.showResult();
+      App.showResult(stateData.lives, stateData.time, stateData.score);
     } else {
       stateData.nextQuestion();
       this.generateLevel();
