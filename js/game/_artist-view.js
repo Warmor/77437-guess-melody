@@ -1,10 +1,10 @@
-import View from './view';
+import View from '../view';
 
 export default class ViewLevelArtist extends View {
-  constructor(songs, trueSong) {
+  constructor(screenData) {
     super();
-    this.songs = songs;
-    this.trueSong = trueSong;
+    this.songs = screenData.songs;
+    this.trueSong = screenData.trueSong;
   }
 
   get template() {
@@ -46,9 +46,11 @@ export default class ViewLevelArtist extends View {
     this.answerCollection = this.element.querySelectorAll(`.main-answer-r`);
 
     for (const answer of this.answerCollection) {
-      answer.addEventListener(`change`, this.onAnswerClick);
+      answer.addEventListener(`change`, (event) => {
+        this.onAnswer(event);
+      });
     }
   }
 
-  onAnswerClick() {}
+  onAnswer() {}
 }

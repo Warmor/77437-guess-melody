@@ -1,5 +1,7 @@
 export default class AbstractView {
-  get template() {}
+  get template() {
+    throw new Error(`need template`);
+  }
 
   render() {
     const container = document.createElement(`template`);
@@ -16,4 +18,5 @@ export default class AbstractView {
     }
     return this._element;
   }
+
 }
