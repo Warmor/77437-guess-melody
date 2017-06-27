@@ -41,10 +41,10 @@ class App {
   }
 
   static showResult(lives, time, score) {
-    const lives = btoa(lives);
-    const time = btoa(time);
-    const score = btoa(score);
-    location.hash = `${ControllerID.RESULT};${lives};${time};${score}`;
+    const hideLives = btoa(lives);
+    const hideTime = btoa(time);
+    const hideScore = btoa(score);
+    location.hash = `${ControllerID.RESULT};${hideLives};${hideTime};${hideScore}`;
   }
 
   static init() {
