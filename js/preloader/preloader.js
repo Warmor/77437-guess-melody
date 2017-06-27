@@ -1,5 +1,5 @@
 import PreloaderView from './preloader-view';
-import {renderView} from '../utils';
+
 class Preloader {
   constructor() {
     this.view = new PreloaderView();
@@ -8,7 +8,7 @@ class Preloader {
   }
   show() {
     this.app.appendChild(this.view.element);
-    this.element = this.app.querySelector(`.cssload-loader`)
+    this.element = this.app.querySelector(`.cssload-loader`);
   }
   hide() {
     this.app.removeChild(this.element);

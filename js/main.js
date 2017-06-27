@@ -1,6 +1,8 @@
 import Welcome from './welcome/welcome';
 import Game from './game/game';
 import Result from './result/result';
+import preloader from './preloader/preloader';
+import gameData from './data/game-data';
 
 const ControllerID = {
   WELCOME: ``,
@@ -48,10 +50,14 @@ class App {
   }
 
   static init() {
+
     window.onhashchange = () => {
       this.changeController(getControllerIDFromHash(location.hash));
     };
-    this.changeController(getControllerIDFromHash(location.hash));
+    preloader.show();
+    gameData.load().
+      then(() => this.changeController(getControllerIDFromHash(location.hash))).
+      then(() => preloader.hide());
   }
 }
 
