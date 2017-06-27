@@ -1,5 +1,4 @@
 import App from '../main';
-import stateData from '../data/state-data';
 import statisticsData from '../data/statistics-data';
 import {renderView} from '../utils';
 
@@ -9,26 +8,21 @@ import FailView from './_fail-view';
 class Result {
   constructor() {}
 
-  generateView() {
-    if (stateData.lives < 1 || stateData.time < 1) {
+  generateView(lives, time, score) {
+    if (lives < 1 || time < 1) {
       this.view = new FailView();
     } else {
-      this.view = new SuccessView(stateData.score, statisticsData.getPercentage(stateData.time, stateData.score));
+      this.view = new SuccessView(score, statisticsData.getPercentage(time, score));
     }
   }
 
-  generateResultScreen() {
-    this.generateView();
+  init(lives, time, score) {
+    this.generateView(lives, time, score);
     this.view.onClickReplay = (event) => {
       event.preventDefault();
       App.showWelcome();
     };
-
     renderView(this.view.element);
-  }
-
-  init() {
-    this.generateResultScreen();
   }
 }
 
