@@ -41,14 +41,12 @@ class Game {
     const newScore = gameData.score + (isAnswerCorrect ? 1 : 0);
     const newLives = isAnswerCorrect ? gameData.lives : gameData.lives - 1;
     gameData.setScore(newScore).setLives(newLives);
-
     if (newLives === 0 || isFinalQuestion) {
       App.showResult(gameData.lives, gameData.time, gameData.score);
     } else {
       gameData.nextQuestion();
       this.generateLevel();
     }
-
   }
 
   init() {

@@ -29,17 +29,19 @@ export default class ViewLevelArtist extends View {
   templateAnswer(answer) {
     return `
       <div class="main-answer-wrapper">
-        <input class="main-answer-r" type="radio" id="${answer.id}" name="answer" data-correct="${answer.isCorrect}" value="${answer.id}" />
+        <input class="main-answer-r" type="radio" id="${answer.id}" name="answer" value="${answer.id}" />
         <label class="main-answer" for="${answer.id}">
           <img class="main-answer-preview" src="${answer.image.url}">
           ${answer.title}
+          ${answer.id}
         </label>
       </div>`;
   }
 
   checkAnswer(element) {
-    const isCorrect = element.dataset.correct;
-    if (isCorrect === `true`) {
+    const answerID = element.id;
+    const currentID = this.trueAnswerID;
+    if (answerID === currentID) {
       return true;
     } else {
       return false;

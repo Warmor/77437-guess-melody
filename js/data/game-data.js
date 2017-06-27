@@ -4,7 +4,7 @@ const adapter = (questions) => {
     question.title = question.question;
 
     question.answers.forEach((answer) => {
-      answer.id = counter++;
+      answer.id = String(++counter);
     });
 
     delete question.question;
