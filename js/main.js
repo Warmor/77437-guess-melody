@@ -13,14 +13,18 @@ const getControllerIDFromHash = (hash) => hash.replace(`#`, ``);
 class App {
   constructor() {}
 
-  static changeController(url = ``) {
-    const route = url.split(`;`);
-    switch (route[0]) {
+  static changeController(hash = ``) {
+    const hashParams = hash.split(`;`);
+    const mainUrl = hashParams[0];
+    switch (mainUrl) {
       case ControllerID.GAME:
         Game.init();
         break;
       case ControllerID.RESULT:
-        Result.init(atob(route[1]), atob(route[2]), atob(route[3]));
+        const lives = atob(hashParams[1]);
+        const time = atob(hashParams[2]);
+        const score = atob(hashParams[3]);
+        Result.init(lives, time, score);
         break;
       default:
         Welcome.init();
@@ -37,7 +41,10 @@ class App {
   }
 
   static showResult(lives, time, score) {
-    location.hash = `${ControllerID.RESULT};${btoa(lives)};${btoa(time)};${btoa(score)}`;
+    const lives = btoa(lives);
+    const time = btoa(time);
+    const score = btoa(score);
+    location.hash = `${ControllerID.RESULT};${lives};${time};${score}`;
   }
 
   static init() {
