@@ -1,26 +1,32 @@
 import App from '../main';
 import gameData from '../data/game-data';
-import stateData from '../data/state-data';
+
 import {renderView} from '../utils';
 
 import ArtistView from './_artist-view';
 import GenreView from './_genre-view';
 
 class Game {
-  constructor() {}
+  constructor() {
+    this.questionData = {};
+    this.typeQuestion = {};
+  }
 
-  getRandomView() {
-    if (Math.random() > 0.5) {
-      this.screenData = gameData.createScreenData(3);
-      this.view = new ArtistView(this.screenData);
-    } else {
-      this.screenData = gameData.createScreenData(4);
-      this.view = new GenreView(this.screenData);
+  getCurrentView() {
+    this.questionData = gameData.questionData;
+    this.typeQuestion = this.questionData.type;
+    switch (this.typeQuestion) {
+      case `artist`:
+        this.view = new ArtistView(this.questionData);
+        break;
+      case `genre`:
+        this.view = new GenreView(this.questionData);
+        break;
     }
   }
 
   generateLevel() {
-    this.getRandomView();
+    this.getCurrentView();
     this.view.onAnswer = (event) => {
       event.preventDefault();
       const isAnswerCorrect = this.view.checkAnswer(event.target);
@@ -31,22 +37,20 @@ class Game {
   }
 
   onAnswered(isAnswerCorrect) {
-    const isFinalQuestion = stateData.currentQuestion === stateData.questions - 1;
-    const newScore = stateData.score + (isAnswerCorrect ? 1 : 0);
-    const newLives = isAnswerCorrect ? stateData.lives : stateData.lives - 1;
-
-    stateData.setScore(newScore).setLives(newLives);
-
+    const isFinalQuestion = gameData.currentQuestion === gameData.questions - 1;
+    const newScore = gameData.score + (isAnswerCorrect ? 1 : 0);
+    const newLives = isAnswerCorrect ? gameData.lives : gameData.lives - 1;
+    gameData.setScore(newScore).setLives(newLives);
     if (newLives === 0 || isFinalQuestion) {
-      App.showResult(stateData.lives, stateData.time, stateData.score);
+      App.showResult(gameData.lives, gameData.time, gameData.score);
     } else {
-      stateData.nextQuestion();
+      gameData.nextQuestion();
       this.generateLevel();
     }
   }
 
   init() {
-    stateData.resetState();
+    gameData.resetState();
     this.generateLevel();
   }
 }

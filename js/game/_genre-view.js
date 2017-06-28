@@ -1,12 +1,12 @@
 import View from '../view';
 
 export default class ViewLevelGenre extends View {
-  constructor(screenData) {
+  constructor(questionData) {
     super();
-    this.songs = screenData.songs;
-    this.trueSong = screenData.trueSong;
-    this.curentAnswers = this.songs.map(function (song) {
-      return song.genre === screenData.trueSong.genre;
+    this.title = questionData.title;
+    this.answers = questionData.answers;
+    this.curentAnswers = this.answers.map(function (answer) {
+      return answer.genre === questionData.genre;
     });
   }
 
@@ -14,21 +14,21 @@ export default class ViewLevelGenre extends View {
     return `
       <section class="main main--level main--level-genre">
         <div class="main-wrap">
-          <h2 class="title main-title">Выберите трек(и) в "${this.trueSong.genre}" стиле</h2>
+          <h2 class="title main-title">"${this.title}"</h2>
           <form class="genre">
-            ${this.songs.map((song) => this.templateAnswer(song)).join(``)}
+            ${this.answers.map((answer) => this.templateAnswer(answer)).join(``)}
             <button class="genre-answer-send" type="send" disabled>Ответить</button>
           </form>
         </div>
       </section>`;
   }
 
-  templateAnswer(song) {
+  templateAnswer(answer) {
     return `
       <div class="genre-answer">
-        <div class="player-wrapper">${song.genre}</div>
-        <input type="checkbox" name="answer" value="${song.value}" id="${song.id}">
-        <label class="genre-answer-check" for="${song.id}"></label>
+        <div class="player-wrapper">${answer.genre}</div>
+        <input type="checkbox" name="answer" value="${answer.id}" id="${answer.id}">
+        <label class="genre-answer-check" for="${answer.id}"></label>
       </div>`;
   }
 

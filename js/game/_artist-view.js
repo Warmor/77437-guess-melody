@@ -1,20 +1,26 @@
 import View from '../view';
 
 export default class ViewLevelArtist extends View {
-  constructor(screenData) {
+  constructor(questionData) {
     super();
-    this.songs = screenData.songs;
-    this.trueSong = screenData.trueSong;
+    this.title = questionData.title;
+    this.src = questionData.src;
+    this.answers = questionData.answers;
+    questionData.answers.forEach((answer) => {
+      if (answer.isCorrect) {
+        this.trueAnswerID = answer.id;
+      }
+    });
   }
 
   get template() {
     return `
       <section class="main main--level main--level-artist">
         <div class="main-wrap">
-          <h2 class="title main-title">Кто исполняет эту песню?</h2>
-          <div class="player-wrapper">${this.trueSong.filePath}</div>
+          <h2 class="title main-title">${this.title}</h2>
+          <div class="player-wrapper">${this.trueAnswerID}</div>
           <form class="main-list">
-            ${this.songs.map((answer) => this.templateAnswer(answer)).join(``)}
+            ${this.answers.map((answer) => this.templateAnswer(answer)).join(``)}
           </form>
         </div>
       </section>`;
@@ -23,17 +29,18 @@ export default class ViewLevelArtist extends View {
   templateAnswer(answer) {
     return `
       <div class="main-answer-wrapper">
-        <input class="main-answer-r" type="radio" id="${answer.id}" name="answer" value="${answer.value}" />
+        <input class="main-answer-r" type="radio" id="${answer.id}" name="answer" value="${answer.id}" />
         <label class="main-answer" for="${answer.id}">
-          <img class="main-answer-preview" src="${answer.imgPath}">
-          ${answer.name}
+          <img class="main-answer-preview" src="${answer.image.url}">
+          ${answer.title}
+          ${answer.id}
         </label>
       </div>`;
   }
 
   checkAnswer(element) {
     const answerID = element.id;
-    const currentID = this.trueSong.id;
+    const currentID = this.trueAnswerID;
     if (answerID === currentID) {
       return true;
     } else {

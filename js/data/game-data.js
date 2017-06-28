@@ -1,93 +1,97 @@
+const adapter = (questions) => {
+  let counter = 0;
+  questions.forEach((question) => {
+    question.title = question.question;
+
+    question.answers.forEach((answer) => {
+      answer.id = String(++counter);
+    });
+
+    delete question.question;
+  });
+  return questions;
+};
+
 class GameData {
+
   constructor() {
-    this.songs = [
-      {
-        name: `Пелагея`,
-        value: `val-1`,
-        id: `a-1`,
-        imgPath: `/img/default.png`,
-        filePath: `/mp3/Пелагея`,
-        genre: `Pop`
-      },
-      {
-        name: `Crazy Town`,
-        value: `val-2`,
-        id: `a-2`,
-        imgPath: `/img/default.png`,
-        filePath: `/mp3/CrazyTown`,
-        genre: `Rock`
-      },
-      {
-        name: `Lorde`,
-        value: `val-3`,
-        id: `a-3`,
-        imgPath: `/img/default.png`,
-        filePath: `/mp3/Lorde`,
-        genre: `Pop`
-      },
-      {
-        name: `Skillet`,
-        value: `val-4`,
-        id: `a-4`,
-        imgPath: `/img/default.png`,
-        filePath: `/mp3/Skillet`,
-        genre: `Rock`
-      },
-      {
-        name: `Грибы`,
-        value: `val-5`,
-        id: `a-5`,
-        imgPath: `/img/default.png`,
-        filePath: `/mp3/Грибы`,
-        genre: `Rap`
-      },
-      {
-        name: `Noize MC`,
-        value: `val-6`,
-        id: `a-6`,
-        imgPath: `/img/default.png`,
-        filePath: `/mp3/Noize`,
-        genre: `Rap`
-      },
-      {
-        name: `Halestorm`,
-        value: `val-7`,
-        id: `a-7`,
-        imgPath: `/img/default.png`,
-        filePath: `/mp3/Halestorm`,
-        genre: `Rock`
-      },
-      {
-        name: `This Century`,
-        value: `val-8`,
-        id: `a-8`,
-        imgPath: `/img/default.png`,
-        filePath: `/mp3/ThisCentury`,
-        genre: `Pop`
-      }
-    ];
+    this._initialState = Object.freeze({
+      questions: 10,
+      currentQuestion: 0,
+      time: 120,
+      lives: 3,
+      score: 0,
+    });
+    this._state = {};
+    this._questionsData = {};
   }
 
-  getUniqueSongs(size) {
-    const songsSet = new Set();
-    while (songsSet.size < size) {
-      songsSet.add(this.getRandomItem(this.songs));
-    }
-    const songs = [...songsSet];
-    return songs;
+  get urlRead() {
+    return `https://intensive-ecmascript-server-btfgudlkpi.now.sh/guess-melody/questions`;
   }
 
-  getRandomItem(array) {
-    const randomIndex = Math.floor(Math.random() * array.length);
-    return array[randomIndex];
+  get urlWrite() {
+    return `https://intensive-ecmascript-server-btfgudlkpi.now.sh/guess-melody/questions`;
   }
 
-  createScreenData(size) {
-    const songs = this.getUniqueSongs(size);
-    const trueSong = this.getRandomItem(songs);
-    return {songs, trueSong};
+  get questionData() {
+    return this._questionsData[this._state.currentQuestion];
+  }
+
+  get questions() {
+    return this._state.questions;
+  }
+
+  get currentQuestion() {
+    return this._state.currentQuestion;
+  }
+
+  get time() {
+    return this._state.time;
+  }
+
+  get lives() {
+    return this._state.lives;
+  }
+
+  get score() {
+    return this._state.score;
+  }
+
+  nextQuestion() {
+    this._state.currentQuestion++;
+    return this;
+  }
+
+  tickTime() {
+    this._state.time--;
+    return this;
+  }
+
+  setLives(newLives) {
+    this._state.lives = newLives;
+    return this;
+  }
+
+  setScore(newScore) {
+    this._state.score = newScore;
+    return this;
+  }
+  resetState() {
+    return Object.assign(this._state, this._initialState);
+  }
+
+  load() {
+    return fetch(this.urlRead)
+      .then((resp) => resp.json())
+      .then((resp) => adapter(resp))
+      .then((resp) => {
+        this._questionsData = resp;
+        return resp;
+      });
   }
 }
 
 const gameData = new GameData();
+
 export default gameData;
