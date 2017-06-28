@@ -7,11 +7,14 @@ export default class PreloaderView extends View {
 
   get template() {
     return `
-      <div class="cssload-loader">
-        <div class="cssload-inner cssload-one"></div>
-        <div class="cssload-inner cssload-two"></div>
-        <div class="cssload-inner cssload-three"></div>
-      </div>`;
+      <section class="main">
+        <div class="cssload-loader">
+          <div class="cssload-inner cssload-one"></div>
+          <div class="cssload-inner cssload-two"></div>
+          <div class="cssload-inner cssload-three"></div>
+        </div>
+      </section>
+      `;
   }
 
 }
