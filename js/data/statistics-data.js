@@ -11,12 +11,12 @@ class StatisticsData {
 
   }
 
-  saveStatistics(time, score) {
+  saveStatistics(realTime, realScore) {
     const data = {
       date: new Date(),
-      time: time,
-      score: score
-    }
+      time: realTime,
+      score: realScore
+    };
     Loader.saveResults(data);
   }
 

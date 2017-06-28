@@ -12,7 +12,7 @@ class Result {
     if (lives < 1 || time < 1 || score < 1) {
       this.view = new FailView();
     } else {
-      const percentage = statisticsData.getPercentage(time, score)
+      const percentage = statisticsData.getPercentage(time, score);
       this.view = new SuccessView(trueAnswers, percentage);
     }
   }
