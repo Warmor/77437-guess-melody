@@ -1,16 +1,23 @@
+import Loader from '../loader';
+
 class StatisticsData {
   constructor() {
-    this.statistics = [
-      {time: 50, score: 10},
-      {time: 55, score: 9},
-      {time: 60, score: 8},
-      {time: 65, score: 7},
-      {time: 70, score: 6},
-      {time: 75, score: 5},
-      {time: 80, score: 4},
-      {time: 85, score: 3},
-      {time: 90, score: 2},
-    ];
+    this.statistics = [];
+  }
+
+  async load() {
+    const response = await Loader.loadResults();
+    this.statistics = response;
+
+  }
+
+  saveStatistics(time, score) {
+    const data = {
+      date: new Date(),
+      time: time,
+      score: score
+    }
+    Loader.saveResults(data);
   }
 
   getPercentage(time, score) {
@@ -20,6 +27,7 @@ class StatisticsData {
     newStatistick.sort(function (a, b) {
       return b.score - a.score || a.time - b.time;
     });
+    this.saveStatistics(time, score);
     return Math.trunc(((newStatistick.length - (newStatistick.indexOf(myStatistick) + 1)) / newStatistick.length) * 100);
   }
 

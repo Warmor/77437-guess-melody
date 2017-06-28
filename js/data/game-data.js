@@ -1,3 +1,5 @@
+import Loader from '../loader';
+
 const adapter = (questions) => {
   let counter = 0;
   questions.forEach((question) => {
@@ -18,20 +20,13 @@ class GameData {
     this._initialState = Object.freeze({
       questions: 10,
       currentQuestion: 0,
+      trueAnswers: 0,
       time: 120,
       lives: 3,
       score: 0,
     });
     this._state = {};
     this._questionsData = {};
-  }
-
-  get urlRead() {
-    return `https://intensive-ecmascript-server-btfgudlkpi.now.sh/guess-melody/questions`;
-  }
-
-  get urlWrite() {
-    return `https://intensive-ecmascript-server-btfgudlkpi.now.sh/guess-melody/questions`;
   }
 
   get questionData() {
@@ -44,6 +39,10 @@ class GameData {
 
   get currentQuestion() {
     return this._state.currentQuestion;
+  }
+
+  get trueAnswers() {
+    return this._state.trueAnswers;
   }
 
   get time() {
@@ -77,18 +76,19 @@ class GameData {
     this._state.score = newScore;
     return this;
   }
+
+  setTrueAnswers() {
+    this._state.trueAnswers++;
+    return this;
+  }
+
   resetState() {
     return Object.assign(this._state, this._initialState);
   }
 
-  load() {
-    return fetch(this.urlRead)
-      .then((resp) => resp.json())
-      .then((resp) => adapter(resp))
-      .then((resp) => {
-        this._questionsData = resp;
-        return resp;
-      });
+  async load() {
+    const response = await Loader.loadData();
+    this._questionsData = adapter(response);
   }
 }
 

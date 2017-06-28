@@ -1,8 +1,8 @@
 import Welcome from './welcome/welcome';
 import Game from './game/game';
 import Result from './result/result';
-import preloader from './preloader/preloader';
 import gameData from './data/game-data';
+import statisticsData from './data/statistics-data';
 
 const ControllerID = {
   WELCOME: ``,
@@ -15,18 +15,21 @@ const getControllerIDFromHash = (hash) => hash.replace(`#`, ``);
 class App {
   constructor() {}
 
-  static changeController(hash = ``) {
+  static async changeController(hash = ``) {
     const hashParams = hash.split(`;`);
     const mainUrl = hashParams[0];
     switch (mainUrl) {
       case ControllerID.GAME:
+        await gameData.load();
         Game.init();
         break;
       case ControllerID.RESULT:
+        await statisticsData.load();
         const lives = atob(hashParams[1]);
         const time = atob(hashParams[2]);
         const score = atob(hashParams[3]);
-        Result.init(lives, time, score);
+        const trueAnswers = atob(hashParams[4]);
+        Result.init(lives, time, score, trueAnswers);
         break;
       default:
         Welcome.init();
@@ -42,22 +45,19 @@ class App {
     location.hash = ControllerID.GAME;
   }
 
-  static showResult(lives, time, score) {
+  static showResult(lives, time, score, trueAnswers) {
     const hideLives = btoa(lives);
     const hideTime = btoa(time);
     const hideScore = btoa(score);
-    location.hash = `${ControllerID.RESULT};${hideLives};${hideTime};${hideScore}`;
+    const hideTrueAnswers = btoa(trueAnswers);
+    location.hash = `${ControllerID.RESULT};${hideLives};${hideTime};${hideScore};${hideTrueAnswers}`;
   }
 
   static init() {
-
     window.onhashchange = () => {
       this.changeController(getControllerIDFromHash(location.hash));
     };
-    preloader.show();
-    gameData.load().
-      then(() => this.changeController(getControllerIDFromHash(location.hash))).
-      then(() => preloader.hide());
+    this.changeController(getControllerIDFromHash(location.hash));
   }
 }
 

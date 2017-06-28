@@ -1,18 +1,13 @@
 import PreloaderView from './preloader-view';
+import {renderView} from '../utils';
 
 class Preloader {
-  constructor() {
-    this.view = new PreloaderView();
-    this.app = document.querySelector(`.app`);
-
-  }
+  constructor() {}
   show() {
-    this.app.appendChild(this.view.element);
-    this.element = this.app.querySelector(`.cssload-loader`);
+    this.view = new PreloaderView();
+    renderView(this.view.element);
   }
-  hide() {
-    this.app.removeChild(this.element);
-  }
+  hide() {}
 }
 
 const preloader = new Preloader();
