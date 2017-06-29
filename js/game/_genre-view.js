@@ -69,6 +69,7 @@ export default class ViewLevelGenre extends View {
     }
 
     this.sendButton.addEventListener(`click`, (event) => {
+      event.preventDefault();
       this.onAnswer(event);
     });
   }

@@ -22,6 +22,7 @@ class GameData {
       currentQuestion: 0,
       trueAnswers: 0,
       time: 120,
+      timePassed: 0,
       lives: 3,
       score: 0,
     });
@@ -49,6 +50,10 @@ class GameData {
     return this._state.time;
   }
 
+  get timePassed() {
+    return this._state.timePassed;
+  }
+
   get lives() {
     return this._state.lives;
   }
@@ -63,7 +68,7 @@ class GameData {
   }
 
   tickTime() {
-    this._state.time--;
+    this._state.timePassed++;
     return this;
   }
 
@@ -87,6 +92,7 @@ class GameData {
   }
 
   async load() {
+    gameData.resetState();
     const response = await Loader.loadData();
     this._questionsData = adapter(response);
   }

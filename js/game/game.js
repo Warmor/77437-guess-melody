@@ -10,6 +10,7 @@ class Game {
   constructor() {
     this.questionData = {};
     this.typeQuestion = {};
+    this.localTimer = 0;
   }
 
   getCurrentView() {
@@ -25,7 +26,15 @@ class Game {
     }
   }
 
+  startLocalTimer() {
+    this.localTimer = 0;
+    this.interval = setInterval(() => {
+      this.localTimer++;
+    }, 1000);
+  }
+
   generateLevel() {
+    this.startLocalTimer();
     this.getCurrentView();
     this.view.onAnswer = (event) => {
       event.preventDefault();
@@ -37,8 +46,18 @@ class Game {
   }
 
   onAnswered(isAnswerCorrect) {
+    clearInterval(this.interval);
+    let newScore = 0;
+    if (isAnswerCorrect) {
+      if (this.localTimer < 10) {
+        newScore = gameData.score + 2;
+      } else {
+        newScore = gameData.score + 1;
+      }
+    } else {
+      newScore = gameData.score;
+    }
     const isFinalQuestion = gameData.currentQuestion === gameData.questions - 1;
-    const newScore = gameData.score + (isAnswerCorrect ? 1 : 0);
     const newLives = isAnswerCorrect ? gameData.lives : gameData.lives - 1;
     gameData.setScore(newScore).setLives(newLives).setTrueAnswers();
 
@@ -51,7 +70,6 @@ class Game {
   }
 
   init() {
-    gameData.resetState();
     this.generateLevel();
   }
 }

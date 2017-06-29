@@ -14,6 +14,10 @@ const imagemin = require('gulp-imagemin');
 const rollup = require('gulp-better-rollup');
 const sourcemaps = require('gulp-sourcemaps');
 const mocha = require('gulp-mocha');
+const uglify = require('gulp-uglify');
+const resolve = require('rollup-plugin-node-resolve');
+const commonjs = require('rollup-plugin-commonjs');
+const babel = require('rollup-plugin-babel');
 
 gulp.task('style', function () {
   gulp.src('sass/style.scss')
@@ -46,6 +50,38 @@ gulp.task('scripts', function () {
     .pipe(sourcemaps.write(''))
     .pipe(gulp.dest('build/js'));
 });
+
+gulp.task('scripts', function () {
+  return gulp.src('js/main.js')
+    .pipe(plumber())
+    .pipe(sourcemaps.init())
+    // note that UMD and IIFE format requires
+    .pipe(rollup({
+      plugins: [
+        // resolve node_modules
+        resolve({browser: true}),
+        // resolve commonjs imports
+        commonjs(),
+        // use babel to transpile into ES5
+        babel({
+          babelrc: false,
+          exclude: 'node_modules/**',
+          presets: [
+            ['env', {modules: false}]
+          ],
+          plugins: [
+            'external-helpers',
+          ]
+        })
+      ]
+    }, 'iife'))
+    // Uglify
+    .pipe(uglify())
+    // save sourcemap as separate file (in the same folder)
+    .pipe(sourcemaps.write(''))
+    .pipe(gulp.dest('build/js'));
+});
+
 
 gulp.task('scripts-helper', function () {
   return gulp.src(['js/animate.js','js/player.js','js/time-format.js','js/timer.js'])
@@ -106,8 +142,12 @@ gulp.task('serve', ['assemble'], function () {
   });
 
   gulp.watch('sass/**/*.{scss,sass}', ['style']);
-  gulp.watch('*.html', ['copy-html']);
-  gulp.watch('js/**/*.js', ['js-watch']);
+  gulp.watch('*.html').on('change', (e) => {
+    if (e.type !== 'deleted') {
+      gulp.start('copy-html');
+    }
+  });
+  gulp.watch('js/**/*.js', ['scripts', server.reload]);
 });
 
 gulp.task('assemble', ['clean'], function () {

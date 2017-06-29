@@ -1,8 +1,12 @@
+import 'babel-polyfill';
+import 'whatwg-fetch';
+
+import gameData from './data/game-data';
+import statisticsData from './data/statistics-data';
 import Welcome from './welcome/welcome';
 import Game from './game/game';
 import Result from './result/result';
-import gameData from './data/game-data';
-import statisticsData from './data/statistics-data';
+import Timer from './timer/timer';
 
 const ControllerID = {
   WELCOME: ``,
@@ -22,8 +26,10 @@ class App {
       case ControllerID.GAME:
         await gameData.load();
         Game.init();
+        Timer.init();
         break;
       case ControllerID.RESULT:
+        Timer.stop();
         await statisticsData.load();
         const lives = atob(hashParams[1]);
         const time = atob(hashParams[2]);
@@ -32,6 +38,7 @@ class App {
         Result.init(lives, time, score, trueAnswers);
         break;
       default:
+        Timer.stop();
         Welcome.init();
         break;
     }

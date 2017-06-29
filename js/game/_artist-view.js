@@ -57,6 +57,7 @@ export default class ViewLevelArtist extends View {
 
     for (const answer of this.answerCollection) {
       answer.addEventListener(`change`, (event) => {
+        event.preventDefault();
         this.onAnswer(event);
       });
     }

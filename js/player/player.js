@@ -39,7 +39,10 @@ const initializePlayer = (element, file, autoplay = true) => {
 
   player.onloadeddata = () => {
 
-    button.onclick = () => switchState(state, player, content);
+    button.onclick = () => {
+      event.preventDefault();
+      switchState(state, player, content);
+    };
     if (autoplay) {
       switchState(state, player, content);
     }
