@@ -1,5 +1,5 @@
-import 'babel-polyfill';
-import 'whatwg-fetch';
+// import 'babel-polyfill';
+// import 'whatwg-fetch';
 
 import gameData from './data/game-data';
 import statisticsData from './data/statistics-data';

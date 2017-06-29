@@ -47,24 +47,25 @@ class Game {
 
   onAnswered(isAnswerCorrect) {
     clearInterval(this.interval);
-    let newScore = 0;
+    let newScore = gameData.score;
+
     if (isAnswerCorrect) {
+      gameData.incrementTrueAnswersCounter();
       if (this.localTimer < 10) {
-        newScore = gameData.score + 2;
+        newScore += 2;
       } else {
-        newScore = gameData.score + 1;
+        newScore += 1;
       }
-    } else {
-      newScore = gameData.score;
     }
+
     const isFinalQuestion = gameData.currentQuestion === gameData.questions - 1;
     const newLives = isAnswerCorrect ? gameData.lives : gameData.lives - 1;
-    gameData.setScore(newScore).setLives(newLives).setTrueAnswers();
+    gameData.setScore(newScore).setLives(newLives);
 
     if (newLives === 0 || isFinalQuestion) {
       App.showResult(gameData.lives, gameData.time, gameData.score, gameData.trueAnswers);
     } else {
-      gameData.nextQuestion();
+      gameData.incrementCurrentQuestionCounter();
       this.generateLevel();
     }
   }

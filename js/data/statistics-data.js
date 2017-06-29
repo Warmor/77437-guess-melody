@@ -1,13 +1,14 @@
 import Loader from '../loader';
+import {computePercentage} from '../utils';
 
 class StatisticsData {
   constructor() {
-    this.statistics = [];
+    this._statistics = [];
   }
 
   async load() {
     const response = await Loader.loadResults();
-    this.statistics = response;
+    this._statistics = response;
 
   }
 
@@ -21,14 +22,8 @@ class StatisticsData {
   }
 
   getPercentage(time, score) {
-    const myStatistick = {time, score};
-    const newStatistick = this.statistics.slice();
-    newStatistick.push(myStatistick);
-    newStatistick.sort(function (a, b) {
-      return b.score - a.score || a.time - b.time;
-    });
-    this.saveStatistics(time, score);
-    return Math.trunc(((newStatistick.length - (newStatistick.indexOf(myStatistick) + 1)) / newStatistick.length) * 100);
+
+    return computePercentage(time, score, this._statistics);
   }
 
 }

@@ -35,8 +35,8 @@ export default class ViewLevelGenre extends View {
 
   checkAnswer() {
     let valid = false;
-    for (let i = 0; i < this.checkboxCollection.length; i++) {
-      if (this.checkboxCollection[i].checked === this.curentAnswers[i]) {
+    for (const [index, checkbox] of this.checkboxCollection.entries()) {
+      if (checkbox.checked === this.curentAnswers[index]) {
         valid = true;
       } else {
         valid = false;
@@ -65,7 +65,9 @@ export default class ViewLevelGenre extends View {
     this.playerWrappers.forEach((player, index) => initializePlayer(player, player.dataset.src, false));
 
     for (const checkbox of this.checkboxCollection) {
-      checkbox.addEventListener(`change`, this.setStateSendButton.bind(this));
+      checkbox.addEventListener(`change`, () => {
+        this.setStateSendButton();
+      });
     }
 
     this.sendButton.addEventListener(`click`, (event) => {

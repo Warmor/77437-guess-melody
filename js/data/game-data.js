@@ -62,16 +62,6 @@ class GameData {
     return this._state.score;
   }
 
-  nextQuestion() {
-    this._state.currentQuestion++;
-    return this;
-  }
-
-  tickTime() {
-    this._state.timePassed++;
-    return this;
-  }
-
   setLives(newLives) {
     this._state.lives = newLives;
     return this;
@@ -82,7 +72,17 @@ class GameData {
     return this;
   }
 
-  setTrueAnswers() {
+  incrementCurrentQuestionCounter() {
+    this._state.currentQuestion++;
+    return this;
+  }
+
+  tickTime() {
+    this._state.timePassed++;
+    return this;
+  }
+
+  incrementTrueAnswersCounter() {
     this._state.trueAnswers++;
     return this;
   }
