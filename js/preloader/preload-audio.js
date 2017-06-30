@@ -1,5 +1,3 @@
-import gameData from '../data/game-data';
-
 class Loader {
 
   constructor(data) {
@@ -12,25 +10,23 @@ class Loader {
     data.forEach((question) => {
       if (question.type === `genre`) {
         question.answers.forEach((answer) => {
-          audioFiles.push(answer.src)
+          audioFiles.push(answer.src);
         });
       } else {
         audioFiles.push(question.src);
       }
     });
-    console.log(audioFiles.length)
     return audioFiles;
   }
 
   preloadAudio(url) {
-    console.log(JSON.stringify(url))
     // c cервера иногда приходят пустые url
-    if (url === '') {
+    if (url === ``) {
       return Promise.resolve();
     }
     return new Promise((resolve) => {
       const audio = new Audio();
-      audio.addEventListener('canplaythrough', () => {
+      audio.addEventListener(`canplaythrough`, () => {
         resolve();
       }, false);
       audio.src = url;
