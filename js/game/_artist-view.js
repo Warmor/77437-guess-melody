@@ -1,4 +1,5 @@
 import View from '../view';
+import initializePlayer from '../player/player.js';
 
 export default class ViewLevelArtist extends View {
   constructor(questionData) {
@@ -49,11 +50,14 @@ export default class ViewLevelArtist extends View {
   }
 
   bind() {
-
     this.answerCollection = this.element.querySelectorAll(`.main-answer-r`);
+    this.playerWrapper = this.element.querySelector(`.player-wrapper`);
+
+    initializePlayer(this.playerWrapper, this.src, false);
 
     for (const answer of this.answerCollection) {
       answer.addEventListener(`change`, (event) => {
+        event.preventDefault();
         this.onAnswer(event);
       });
     }

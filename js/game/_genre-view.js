@@ -1,4 +1,5 @@
 import View from '../view';
+import initializePlayer from '../player/player.js';
 
 export default class ViewLevelGenre extends View {
   constructor(questionData) {
@@ -26,7 +27,7 @@ export default class ViewLevelGenre extends View {
   templateAnswer(answer) {
     return `
       <div class="genre-answer">
-        <div class="player-wrapper">${answer.genre}</div>
+        <div class="player-wrapper" data-src="${answer.src}"></div>
         <input type="checkbox" name="answer" value="${answer.id}" id="${answer.id}">
         <label class="genre-answer-check" for="${answer.id}"></label>
       </div>`;
@@ -34,8 +35,8 @@ export default class ViewLevelGenre extends View {
 
   checkAnswer() {
     let valid = false;
-    for (let i = 0; i < this.checkboxCollection.length; i++) {
-      if (this.checkboxCollection[i].checked === this.curentAnswers[i]) {
+    for (const [index, checkbox] of this.checkboxCollection.entries()) {
+      if (checkbox.checked === this.curentAnswers[index]) {
         valid = true;
       } else {
         valid = false;
@@ -59,12 +60,18 @@ export default class ViewLevelGenre extends View {
   bind() {
     this.sendButton = this.element.querySelector(`.genre-answer-send`);
     this.checkboxCollection = this.element.querySelectorAll(`input[type="checkbox"]`);
+    this.playerWrappers = this.element.querySelectorAll(`.player-wrapper`);
+
+    this.playerWrappers.forEach((player, index) => initializePlayer(player, player.dataset.src, false));
 
     for (const checkbox of this.checkboxCollection) {
-      checkbox.addEventListener(`change`, this.setStateSendButton.bind(this));
+      checkbox.addEventListener(`change`, () => {
+        this.setStateSendButton();
+      });
     }
 
     this.sendButton.addEventListener(`click`, (event) => {
+      event.preventDefault();
       this.onAnswer(event);
     });
   }

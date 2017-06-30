@@ -13,7 +13,8 @@ class Result {
       this.view = new FailView();
     } else {
       const percentage = statisticsData.getPercentage(time, score);
-      this.view = new SuccessView(trueAnswers, percentage);
+      this.view = new SuccessView(trueAnswers, percentage, score);
+      statisticsData.saveStatistics(time, score);
     }
   }
 

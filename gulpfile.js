@@ -14,6 +14,10 @@ const imagemin = require('gulp-imagemin');
 const rollup = require('gulp-better-rollup');
 const sourcemaps = require('gulp-sourcemaps');
 const mocha = require('gulp-mocha');
+const uglify = require('gulp-uglify');
+const resolve = require('rollup-plugin-node-resolve');
+const commonjs = require('rollup-plugin-commonjs');
+const babel = require('rollup-plugin-babel');
 
 gulp.task('style', function () {
   gulp.src('sass/style.scss')
@@ -42,10 +46,27 @@ gulp.task('scripts', function () {
   return gulp.src('js/main.js')
     .pipe(plumber())
     .pipe(sourcemaps.init())
-    .pipe(rollup({}, 'iife'))
+    .pipe(rollup({
+      plugins: [
+        resolve({browser: true}),
+        commonjs(),
+        babel({
+          babelrc: false,
+          exclude: 'node_modules/**',
+          presets: [
+            ['env', {modules: false}]
+          ],
+          plugins: [
+            'external-helpers',
+          ]
+        })
+      ]
+    }, 'iife'))
+    .pipe(uglify())
     .pipe(sourcemaps.write(''))
     .pipe(gulp.dest('build/js'));
 });
+
 
 gulp.task('scripts-helper', function () {
   return gulp.src(['js/animate.js','js/player.js','js/time-format.js','js/timer.js'])
@@ -106,8 +127,12 @@ gulp.task('serve', ['assemble'], function () {
   });
 
   gulp.watch('sass/**/*.{scss,sass}', ['style']);
-  gulp.watch('*.html', ['copy-html']);
-  gulp.watch('js/**/*.js', ['js-watch']);
+  gulp.watch('*.html').on('change', (e) => {
+    if (e.type !== 'deleted') {
+      gulp.start('copy-html');
+    }
+  });
+  gulp.watch('js/**/*.js', ['scripts', server.reload]);
 });
 
 gulp.task('assemble', ['clean'], function () {

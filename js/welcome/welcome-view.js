@@ -20,6 +20,4 @@ export default class ViewWelcome extends View {
     this.playGameButton = this.element.querySelector(`.main-play`);
     this.playGameButton.addEventListener(`click`, this.onPlayClick);
   }
-
-  onPlayClick() {}
 }

@@ -10,6 +10,7 @@ class Game {
   constructor() {
     this.questionData = {};
     this.typeQuestion = {};
+    this.localTimer = 0;
   }
 
   getCurrentView() {
@@ -25,33 +26,50 @@ class Game {
     }
   }
 
+  startLocalTimer() {
+    this.localTimer = 0;
+    this.interval = setInterval(() => {
+      this.localTimer++;
+    }, 1000);
+  }
+
   generateLevel() {
+    this.startLocalTimer();
     this.getCurrentView();
     this.view.onAnswer = (event) => {
       event.preventDefault();
       const isAnswerCorrect = this.view.checkAnswer(event.target);
       this.onAnswered(isAnswerCorrect);
     };
-
     renderView(this.view.element);
   }
 
   onAnswered(isAnswerCorrect) {
+    clearInterval(this.interval);
+    let newScore = gameData.score;
+
+    if (isAnswerCorrect) {
+      gameData.incrementTrueAnswersCounter();
+      if (this.localTimer < 10) {
+        newScore += 2;
+      } else {
+        newScore += 1;
+      }
+    }
+
     const isFinalQuestion = gameData.currentQuestion === gameData.questions - 1;
-    const newScore = gameData.score + (isAnswerCorrect ? 1 : 0);
     const newLives = isAnswerCorrect ? gameData.lives : gameData.lives - 1;
-    gameData.setScore(newScore).setLives(newLives).setTrueAnswers();
+    gameData.setScore(newScore).setLives(newLives);
 
     if (newLives === 0 || isFinalQuestion) {
       App.showResult(gameData.lives, gameData.time, gameData.score, gameData.trueAnswers);
     } else {
-      gameData.nextQuestion();
+      gameData.incrementCurrentQuestionCounter();
       this.generateLevel();
     }
   }
 
   init() {
-    gameData.resetState();
     this.generateLevel();
   }
 }
