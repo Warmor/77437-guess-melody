@@ -46,23 +46,10 @@ gulp.task('scripts', function () {
   return gulp.src('js/main.js')
     .pipe(plumber())
     .pipe(sourcemaps.init())
-    .pipe(rollup({}, 'iife'))
-    .pipe(sourcemaps.write(''))
-    .pipe(gulp.dest('build/js'));
-});
-
-gulp.task('scripts', function () {
-  return gulp.src('js/main.js')
-    .pipe(plumber())
-    .pipe(sourcemaps.init())
-    // note that UMD and IIFE format requires
     .pipe(rollup({
       plugins: [
-        // resolve node_modules
         resolve({browser: true}),
-        // resolve commonjs imports
         commonjs(),
-        // use babel to transpile into ES5
         babel({
           babelrc: false,
           exclude: 'node_modules/**',
@@ -75,9 +62,7 @@ gulp.task('scripts', function () {
         })
       ]
     }, 'iife'))
-    // Uglify
     .pipe(uglify())
-    // save sourcemap as separate file (in the same folder)
     .pipe(sourcemaps.write(''))
     .pipe(gulp.dest('build/js'));
 });

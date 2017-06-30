@@ -41,7 +41,6 @@ class Game {
       const isAnswerCorrect = this.view.checkAnswer(event.target);
       this.onAnswered(isAnswerCorrect);
     };
-
     renderView(this.view.element);
   }
 
