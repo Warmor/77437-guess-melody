@@ -20,30 +20,30 @@ class LoaderAudio {
   }
 
   preloadAudio(url) {
-    // c cервера иногда приходят пустые url
-    if (url === ``) {
-      return Promise.resolve();
-    }
-
     return new Promise((resolve, reject) => {
-      const audio = new Audio();
-
-      // на случай если сервер завис и не отдаёт никакого ответа (вечный pending)
-      const exclusionTimeout = setTimeout(() => {
+      // c cервера иногда приходят пустые url
+      if (url === ``) {
         resolve();
-      }, 10000);
+      } else {
+        const audio = new Audio();
 
-      audio.addEventListener(`canplaythrough`, () => {
-        clearTimeout(exclusionTimeout);
-        resolve();
-      }, false);
+        // на случай если сервер завис и не отдаёт никакого ответа (вечный pending)
+        const exclusionTimeout = setTimeout(() => {
+          resolve();
+        }, 10000);
 
-      // в текущем проекте не предусмотренно экрана ошибки загрузки
-      audio.addEventListener(`error`, () => {
-        clearTimeout(exclusionTimeout);
-        resolve();
-      }, false);
-      audio.src = url;
+        audio.addEventListener(`canplaythrough`, () => {
+          clearTimeout(exclusionTimeout);
+          resolve();
+        }, false);
+
+        // в текущем проекте не предусмотренно экрана ошибки загрузки
+        audio.addEventListener(`error`, () => {
+          clearTimeout(exclusionTimeout);
+          resolve();
+        }, false);
+        audio.src = url;
+      }
     });
   }
 
