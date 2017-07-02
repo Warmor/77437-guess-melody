@@ -1,7 +1,7 @@
 import {convertTime} from '../utils';
 import assert from 'assert';
 
-describe(`computePercentage`, () => {
+describe(`convertTime`, () => {
   it(`convert 120 sec to 02 min, 00 sec`, () => {
     assert.deepEqual({min: `02`, sec: `00`}, convertTime(120));
   });

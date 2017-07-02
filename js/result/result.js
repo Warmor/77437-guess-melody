@@ -22,6 +22,7 @@ class Result {
     this.generateView(lives, time, score, trueAnswers);
     this.view.onClickReplay = (event) => {
       event.preventDefault();
+      this.view.unbind();
       App.showWelcome();
     };
     renderView(this.view.element);

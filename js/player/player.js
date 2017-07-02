@@ -18,7 +18,7 @@ const destroyPlayer = (element, state) => {
   const player = element.querySelector(`audio`);
   const button = element.querySelector(`button`);
 
-  player.src = null;
+  player.src = ``;
   button.onclick = null;
   element.innerHTML = ``;
   state = null;

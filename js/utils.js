@@ -1,18 +1,21 @@
+// некоторые функции из этого модуля тестируются, приходится извращятся
+
 const app = typeof document !== `undefined` ? document.querySelector(`.app`) : null;
+let currentView = (app !== null) ? app.querySelector(`.main`) : null;
+let currentTimer = (app !== null) ? app.querySelector(`.main-timer`) : null;
 
 export const renderView = (template) => {
-  const currentScreen = app.querySelector(`.main`);
-  app.replaceChild(template, currentScreen);
+  app.replaceChild(template, currentView);
+  currentView = template;
 };
 
 export const renderTimer = (template) => {
-  const currentScreen = app.querySelector(`.main-timer`);
-  app.replaceChild(template, currentScreen);
+  app.replaceChild(template, currentTimer);
+  currentTimer = template;
 };
 
 export const clearTimer = () => {
-  const timer = app.querySelector(`.main-timer`);
-  timer.innerHTML = ``;
+  currentTimer.innerHTML = ``;
 };
 
 export const convertTime = (time) => {

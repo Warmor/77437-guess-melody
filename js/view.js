@@ -3,14 +3,6 @@ export default class AbstractView {
     throw new Error(`need template`);
   }
 
-  render() {
-    const container = document.createElement(`template`);
-    container.innerHTML = this.template;
-    return container.content;
-  }
-
-  bind() {}
-
   get element() {
     if (!this._element) {
       this._element = this.render();
@@ -18,5 +10,13 @@ export default class AbstractView {
     }
     return this._element;
   }
+
+  render() {
+    const container = document.createElement(`div`);
+    container.innerHTML = this.template;
+    return container.children[0];
+  }
+
+  bind() {}
 
 }

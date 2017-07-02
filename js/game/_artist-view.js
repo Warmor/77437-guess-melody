@@ -21,7 +21,7 @@ export default class ViewLevelArtist extends View {
           <h2 class="title main-title">${this.title}</h2>
           <div class="player-wrapper">${this.trueAnswerID}</div>
           <form class="main-list">
-            ${this.answers.map((answer) => this.templateAnswer(answer)).join(``)}
+            ${this.answers.map(this.templateAnswer).join(``)}
           </form>
         </div>
       </section>`;
@@ -40,26 +40,24 @@ export default class ViewLevelArtist extends View {
   }
 
   checkAnswer(element) {
-    const answerID = element.id;
-    const currentID = this.trueAnswerID;
-    if (answerID === currentID) {
-      return true;
-    } else {
-      return false;
-    }
+    return element.id === this.trueAnswerID;
   }
 
   bind() {
     this.answerCollection = this.element.querySelectorAll(`.main-answer-r`);
     this.playerWrapper = this.element.querySelector(`.player-wrapper`);
 
-    initializePlayer(this.playerWrapper, this.src, false);
+    this.destroyPlayer = initializePlayer(this.playerWrapper, this.src, false);
 
     for (const answer of this.answerCollection) {
-      answer.addEventListener(`change`, (event) => {
-        event.preventDefault();
-        this.onAnswer(event);
-      });
+      answer.addEventListener(`click`, this.onAnswer);
+    }
+  }
+
+  unbind() {
+    this.destroyPlayer();
+    for (const answer of this.answerCollection) {
+      answer.removeEventListener(`click`, this.onAnswer);
     }
   }
 

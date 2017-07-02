@@ -6,10 +6,8 @@ class StatisticsData {
     this._statistics = [];
   }
 
-  async load() {
-    const response = await Loader.loadResults();
-    this._statistics = response;
-
+  getPercentage(time, score) {
+    return computePercentage(time, score, this._statistics);
   }
 
   saveStatistics(realTime, realScore) {
@@ -21,9 +19,10 @@ class StatisticsData {
     Loader.saveResults(data);
   }
 
-  getPercentage(time, score) {
+  async load() {
+    const response = await Loader.loadResults();
+    this._statistics = response;
 
-    return computePercentage(time, score, this._statistics);
   }
 
 }

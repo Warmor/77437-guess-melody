@@ -1,4 +1,4 @@
-import PreloaderView from './preloader-view';
+import PreloaderView from './_preloader-view';
 import {renderView} from '../utils';
 
 class Preloader {
@@ -7,7 +7,6 @@ class Preloader {
     this.view = new PreloaderView();
     renderView(this.view.element);
   }
-  hide() {}
 }
 
 const preloader = new Preloader();

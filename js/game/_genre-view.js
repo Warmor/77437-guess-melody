@@ -17,7 +17,7 @@ export default class ViewLevelGenre extends View {
         <div class="main-wrap">
           <h2 class="title main-title">"${this.title}"</h2>
           <form class="genre">
-            ${this.answers.map((answer) => this.templateAnswer(answer)).join(``)}
+            ${this.answers.map(this.templateAnswer).join(``)}
             <button class="genre-answer-send" type="send" disabled>Ответить</button>
           </form>
         </div>
@@ -56,24 +56,31 @@ export default class ViewLevelGenre extends View {
     }
     this.sendButton.disabled = !anyCheckboxChecked;
   }
-
   bind() {
     this.sendButton = this.element.querySelector(`.genre-answer-send`);
     this.checkboxCollection = this.element.querySelectorAll(`input[type="checkbox"]`);
     this.playerWrappers = this.element.querySelectorAll(`.player-wrapper`);
+    this.setStateSendButton = this.setStateSendButton.bind(this);
 
-    this.playerWrappers.forEach((player, index) => initializePlayer(player, player.dataset.src, false));
+    this.playerWrappers.forEach((player, index) =>{
+      player.destroyPlayer = initializePlayer(player, player.dataset.src, false);
+    });
+
+    this.sendButton.addEventListener(`click`, this.onAnswer);
 
     for (const checkbox of this.checkboxCollection) {
-      checkbox.addEventListener(`change`, () => {
-        this.setStateSendButton();
-      });
+      checkbox.addEventListener(`change`, this.setStateSendButton);
     }
+  }
 
-    this.sendButton.addEventListener(`click`, (event) => {
-      event.preventDefault();
-      this.onAnswer(event);
+  unbind() {
+    this.playerWrappers.forEach((player) =>{
+      player.destroyPlayer();
     });
+    for (const checkbox of this.checkboxCollection) {
+      checkbox.removeEventListener(`change`, this.setStateSendButton);
+    }
+    this.sendButton.removeEventListener(`click`, this.onAnswer);
   }
 
   onAnswer() {}

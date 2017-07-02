@@ -44,7 +44,12 @@ class Game {
     renderView(this.view.element);
   }
 
+  init() {
+    this.generateLevel();
+  }
+
   onAnswered(isAnswerCorrect) {
+    this.view.unbind();
     clearInterval(this.interval);
     let newScore = gameData.score;
 
@@ -67,10 +72,6 @@ class Game {
       gameData.incrementCurrentQuestionCounter();
       this.generateLevel();
     }
-  }
-
-  init() {
-    this.generateLevel();
   }
 }
 

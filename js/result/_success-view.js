@@ -23,5 +23,9 @@ export default class ViewResultSuccess extends View {
     this.replayButton.addEventListener(`click`, this.onClickReplay);
   }
 
+  unbind() {
+    this.replayButton.removeEventListener(`click`, this.onClickReplay);
+  }
+
   onClickReplay() {}
 }

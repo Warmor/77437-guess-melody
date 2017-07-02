@@ -4,7 +4,7 @@ import gameData from '../data/game-data';
 import {renderTimer} from '../utils';
 import {clearTimer} from '../utils';
 
-import TimerView from './timer-view';
+import TimerView from './_timer-view';
 
 class Timer {
   constructor() {

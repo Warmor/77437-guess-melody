@@ -72,13 +72,13 @@ class GameData {
     return this;
   }
 
-  incrementCurrentQuestionCounter() {
-    this._state.currentQuestion++;
+  tickTime() {
+    this._state.timePassed++;
     return this;
   }
 
-  tickTime() {
-    this._state.timePassed++;
+  incrementCurrentQuestionCounter() {
+    this._state.currentQuestion++;
     return this;
   }
 

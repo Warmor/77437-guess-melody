@@ -1,4 +1,4 @@
-import WelcomeView from './welcome-view';
+import WelcomeView from './_welcome-view';
 import App from '../main';
 import {renderView} from '../utils';
 
@@ -10,6 +10,7 @@ class Welcome {
     this.view = new WelcomeView();
 
     this.view.onPlayClick = () => {
+      this.view.unbind();
       App.showGame();
     };
     renderView(this.view.element);

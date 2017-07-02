@@ -1,4 +1,4 @@
-class Loader {
+class LoaderAudio {
 
   constructor(data) {
     this.audioFiles = [];
@@ -24,9 +24,23 @@ class Loader {
     if (url === ``) {
       return Promise.resolve();
     }
-    return new Promise((resolve) => {
+
+    return new Promise((resolve, reject) => {
       const audio = new Audio();
+
+      // на случай если сервер завис и не отдаёт никакого ответа (вечный pending)
+      const exclusionTimeout = setTimeout(() => {
+        resolve();
+      }, 10000);
+
       audio.addEventListener(`canplaythrough`, () => {
+        clearTimeout(exclusionTimeout);
+        resolve();
+      }, false);
+
+      // в текущем проекте не предусмотренно экрана ошибки загрузки
+      audio.addEventListener(`error`, () => {
+        clearTimeout(exclusionTimeout);
         resolve();
       }, false);
       audio.src = url;
@@ -34,7 +48,10 @@ class Loader {
   }
 
   startPreloadAudio(audioFiles) {
-    return Promise.all(audioFiles.map(this.preloadAudio));
+    return Promise.all(audioFiles.map(this.preloadAudio))
+      .catch(() => {
+        throw new Error(`Ошибка загрузки аудио`);
+      });
   }
 
   async init(data) {
@@ -44,6 +61,6 @@ class Loader {
   }
 }
 
-const preloadAudio = new Loader();
+const preloadAudio = new LoaderAudio();
 
 export default preloadAudio;
